@@ -1,0 +1,95 @@
+body {
+  margin: 0;
+  padding: 0;
+
+}
+
+html {
+  color-scheme: dark light;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+div::-webkit-scrollbar-track {
+  background: none;
+}
+
+::-webkit-scrollbar-track {
+  background: dimgrey;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: grey;
+  border-radius: 20px;
+}
+
+nav {
+  height: auto;
+  min-height: 100vh;
+  width: 200px;
+  background-color: hsl(0, 0%, 60%);
+  margin-right: auto;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+li a {
+  display: block;
+  padding: 10px;
+  color: hsl(0, 0%, 19%);
+  text-decoration: none;
+  text-align: center;
+  background-color: hsl(0, 0%, 60%);
+  transition: background-color ease 400ms
+}
+
+li a:hover {
+  background-color: hsl(110, 94%, 31%);
+}
+
+footer {
+  background-color: hsl(0, 0%, 15%);
+  text-align: center;
+  width: auto;
+  height: 100px;
+}
+
+footer span {
+  color: hsl(0, 0%, 60%);
+}
+
+.main-frame {
+  display: flex;
+  background-color: rgb(84, 90, 142);
+}
+
+main {
+  background-color: hsl(217, 52%, 64%);
+  flex: auto;
+}
+
+.widget {
+  width: 200px;
+  height: 200px;
+  border: 10px;
+  border-radius: 20px;
+  border-color: hsl(103, 10%, 63%);
+  background-color: aqua;
+}
+
+.table-wrapper {
+  max-height: 200px;
+  min-width: 100px;
+  overflow: auto;
+  display: inline-block;
+}
+
+.table-earnings {
+  background: #F3F5F6;
+}

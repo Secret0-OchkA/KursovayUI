@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Main</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="/css/layout.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://kit.fontawesome.com/e85747e3bb.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+  <div class="main-frame">
+    <nav class="navbar-dark bg-dark nav flex-column nav-pills nav-fill" id="v-pills-tab" role="tablist"
+      aria-orientation="vertical">
+      <a class="nav-link active show" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab"
+        aria-controls="v-pills-home" aria-selected="true"><i class="fa-solid fa-globe"></i> Главная</a>
+      <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-departments" role="tab"
+        aria-controls="v-pills-profile" aria-selected="false"><i class="fa-solid fa-building"></i> Департаменты</a>
+      <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-employees" role="tab"
+        aria-controls="v-pills-messages" aria-selected="false"><i class="fa-solid fa-users"></i> Работники</a>
+      <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-expense-types" role="tab"
+        aria-controls="v-pills-settings" aria-selected="false"><i class="fa-solid fa-chart-line"></i> Типы трат</a>
+      <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-expenses" role="tab"
+        aria-controls="v-pills-settings" aria-selected="false"><i class="fa-solid fa-address-book"></i> Траты</a>
+    </nav>
+    <div id="content-panel" class="container-fluid m-3 p-0">
+      <div class="tab-content" id="v-pills-tabContent">
+        <!--General-->
+        <div class="tab-pane fade active show" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+          <div class="container-fluid">
+            <div class="row pb-3">
+              <!--chart-->
+              <div class="col p-0 mr-3">
+                <canvas class="bg-dark rounded chart-default"></canvas>
+              </div>
+              <!--chart-->
+              <div class="col p-0">
+                <canvas class="bg-dark rounded chart-default"></canvas>
+              </div>
+            </div>
+            <div class="row pb-3">
+              <!--general table-->
+              <div class="col table-wrapper bg-info rounded p-0 bg-dark">
+                <table id="departmentTable" class="table table-dark p-0 m-0">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">First</th>
+                      <th scope="col">Last</th>
+                      <th scope="col">Handle</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">1</th>
+                      <td>Mark</td>
+                      <td>Otto</td>
+                      <td>@mdo</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">2</th>
+                      <td>Jacob</td>
+                      <td>Thornton</td>
+                      <td>@fat</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">3</th>
+                      <td>Larry</td>
+                      <td>the Bird</td>
+                      <td>@twitter</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">1</th>
+                      <td>Mark</td>
+                      <td>Otto</td>
+                      <td>@mdo</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">1</th>
+                      <td>Mark</td>
+                      <td>Otto</td>
+                      <td>@mdo</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">1</th>
+                      <td>Mark</td>
+                      <td>Otto</td>
+                      <td>@mdo</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="row pb-3">
+              <div><span>total employees</span></div>
+            </div>
+          </div>
+        </div>
+        <!--department-->
+        <div class="tab-pane fade" id="v-pills-departments" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+          <div class="container-fluid">
+            <div class="row h-25 pb-3">
+              <div class="col table-wrapper bg-info rounded p-0 bg-dark">
+                <!--department table-->
+                <table id="departmentTable" class="table table-dark p-0 m-0">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Buget</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">1</th>
+                      <td>Mark</td>
+                      <td>100</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">2</th>
+                      <td>Jacob</td>
+                      <td>2222</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">3</th>
+                      <td>Larry</td>
+                      <td>333</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">3</th>
+                      <td>Larry</td>
+                      <td>333</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">3</th>
+                      <td>Larry</td>
+                      <td>333</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="w-100"></div>
+            </div>
+            <div class="row h-25 pb-3">
+              <div class="col rounded p-0 mr-3">
+                <div class="row-auto p-0 m-0 h-100">
+                  <div class="col rounded bg-danger mb-3 p-0">
+                    <div class="col rounded bg-dark p-4 mr-3">
+                      <!--general table-->
+                      <form id="departmentCreate" class="needs-validation" novalidate>
+                        <div class="form-group">
+                          <label for="inputDepartmentName" class="text-white">Department name</label>
+                          <input type="text" class="form-control bg-dark text-white" id="inputDepartmentName"
+                            aria-describedby="emailHelp" placeholder="Enter name" required>
+                          <small id="emailHelp" class="form-text text-muted">Unique name</small>
+                        </div>
+                        <div class="form-group">
+                          <label for="inputDepartmentBuget" class="text-white">Buget</label>
+                          <input type="number" class="form-control bg-dark text-white" id="inputDepartmentBuget"
+                            aria-describedby="emailHelp" placeholder="Enter buget" value="0" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Create department</button>
+                      </form>
+                    </div>
+                  </div>
+                  <div class="w-100 bg-danger"></div>
+                  <div class="col rounded m-0 p-0">
+                    <!--department variable grid-->
+                    <div class="row p-0 m-0">
+                      <div class="col p-0 mr-3">
+                        <div class="bg-dark p-4 mb-3 rounded text-white col">
+                          <span class="h4">Most employees</span>
+                          <div class="h2">
+                            <span>100</span><i class="fa-solid fa-person text-primary"></i>
+                          </div>
+                        </div>
+                        <div class="bg-dark p-4 mb-3 rounded text-white col">
+                          <span class="h4">Most expense</span>
+                          <div class="h2">
+                            <span>200</span><i class="fa-solid fa-cart-shopping text-primary"></i>
+                          </div>
+                        </div>
+                      </div>
+                      <div class=" col p-0 m-0">
+                        <div class="bg-dark p-4 mb-3 rounded text-white col">
+                          <span class="h4">Most expens money</span>
+                          <div class="h2">
+                            <span>14881488</span><i class="fa-solid fa-dollar-sign text-primary"></i>
+                          </div>
+                        </div>
+                        <div class="bg-dark p-4 mb-3 rounded text-white col">
+                          <span class="h4">Most have money</span>
+                          <div class="h2">
+                            <span>14881488</span><i class="fa-solid fa-wallet text-primary"></i>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row p-0 m-0 bg-info">
+                      <div class="col rounded bg-dark p-4">
+                        <!--department delete form-->
+                        <form class="needs-validation" novalidate>
+                          <div class="form-group">
+                            <label for="inputDepartmentName" class="text-white">Department</label>
+                            <select class="form-control bg-dark text-white" id="exampleFormControlSelect1">
+                              <option>1</option>
+                              <option>2</option>
+                              <option>3</option>
+                              <option>4</option>
+                              <option>5</option>
+                            </select>
+                          </div>
+                          <button type="submit" class="btn btn-primary">Delet Department</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col rounded bg-dark p-4">
+                <!--department change buget plan form-->
+                <form class="needs-validation" novalidate>
+                  <div class="form-row pb-3">
+                    <div class="col-4">
+                      <label class="text-white" for="January">January</label>
+                    </div>
+                    <div class="col">
+                      <input class="form-control rounded bg-dark text-white" type="number" name="January" value="0"
+                        id="month">
+                    </div>
+                  </div>
+                  <div class="form-row pb-3">
+                    <div class="col-4">
+                      <label class="text-white" for="February">February</label>
+                    </div>
+                    <div class="col">
+                      <input class="form-control rounded bg-dark text-white" type="number" name="February" value="0"
+                        id="month">
+                    </div>
+                  </div>
+                  <div class="form-row pb-3">
+                    <div class="col-4">
+                      <label class="text-white" for="March">March</label>
+                    </div>
+                    <div class="col">
+                      <input class="form-control rounded bg-dark text-white" type="number" name="March" value="0"
+                        id="month">
+                    </div>
+                  </div>
+                  <div class="form-row pb-3">
+                    <div class="col-4">
+                      <label class="text-white" for="April">April</label>
+                    </div>
+                    <div class="col">
+                      <input class="form-control rounded bg-dark text-white" type="number" name="April" value="0"
+                        id="month">
+                    </div>
+                  </div>
+                  <div class="form-row pb-3">
+                    <div class="col-4">
+                      <label class="text-white" for="May">May</label>
+                    </div>
+                    <div class="col">
+                      <input class="form-control rounded bg-dark text-white" type="number" name="May" value="0"
+                        id="month">
+                    </div>
+                  </div>
+                  <div class="form-row pb-3">
+                    <div class="col-4">
+                      <label class="text-white" for="June">June</label>
+                    </div>
+                    <div class="col">
+                      <input class="form-control rounded bg-dark text-white" type="number" name="June" value="0"
+                        id="month">
+                    </div>
+                  </div>
+                  <div class="form-row pb-3">
+                    <div class="col-4">
+                      <label class="text-white" for="July">July</label>
+                    </div>
+                    <div class="col">
+                      <input class="form-control rounded bg-dark text-white" type="number" name="July" value="0"
+                        id="month">
+                    </div>
+                  </div>
+                  <div class="form-row pb-3">
+                    <div class="col-4">
+                      <label class="text-white" for="August">August</label>
+                    </div>
+                    <div class="col">
+                      <input class="form-control rounded bg-dark text-white" type="number" name="August" value="0"
+                        id="month">
+                    </div>
+                  </div>
+                  <div class="form-row pb-3">
+                    <div class="col-4">
+                      <label class="text-white" for="September">September</label>
+                    </div>
+                    <div class="col">
+                      <input class="form-control rounded bg-dark text-white" type="number" name="September" value="0"
+                        id="month">
+                    </div>
+                  </div>
+                  <div class="form-row pb-3">
+                    <div class="col-4">
+                      <label class="text-white" for="October">October</label>
+                    </div>
+                    <div class="col">
+                      <input class="form-control rounded bg-dark text-white" type="number" name="October" value="0"
+                        id="month">
+                    </div>
+                  </div>
+                  <div class="form-row pb-3">
+                    <div class="col-4">
+                      <label class="text-white" for="November">November</label>
+                    </div>
+                    <div class="col">
+                      <input class="form-control rounded bg-dark text-white" type="number" name="November" value="0"
+                        id="month">
+                    </div>
+                  </div>
+                  <div class="form-row pb-3">
+                    <div class="col-4">
+                      <label class="text-white" for="December">December</label>
+                    </div>
+                    <div class="col">
+                      <input class="form-control rounded bg-dark text-white" type="number" name="December" value="0"
+                        id="month">
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Save Change</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--employee-->
+        <div class="tab-pane fade" id="v-pills-employees" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+          <div class="container-fluid">
+            <div class="row h-25 pb-3">
+              <div class="col table-wrapper bg-info rounded p-0 bg-dark">
+                <!--employee table-->
+                <table id="employeeTable" class="table table-dark p-0 m-0">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Name</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">1</th>
+                      <td>Mark</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">2</th>
+                      <td>Jacob</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">3</th>
+                      <td>Larry</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">1</th>
+                      <td>Mark</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">1</th>
+                      <td>Mark</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">1</th>
+                      <td>Mark</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="w-100"></div>
+            </div>
+            <div class="row h-25 pb-3">
+              <div class="col rounded bg-dark p-4 mr-3">
+                <!--employee create form-->
+                <form class="needs-validation" novalidate>
+                  <div class="form-group">
+                    <label for="inputEmployeeName" class="text-white">Employee name</label>
+                    <input type="text" class="form-control bg-dark text-white" id="inputEmployeeName"
+                      aria-describedby="emailHelp" placeholder="Enter name" required>
+                    <small id="emailHelp" class="form-text text-muted">Unique name</small>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputDepartmentName" class="text-white">Department</label>
+                    <select class="form-control bg-dark text-white" id="exampleFormControlSelect1">
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                    </select>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Create employee</button>
+                </form>
+              </div>
+              <div class="col rounded bg-dark p-4 mr-3">
+                <!--form-form create expense-->
+                <form class="needs-validation" novalidate>
+                  <div class="form-group">
+                    <label for="inputDepartmentName" class="text-white">Employee</label>
+                    <select class="form-control bg-dark text-white" id="exampleFormControlSelect1">
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="expenseType" class="text-white">Expense type</label>
+                    <select class="form-control bg-dark text-white" id="exampleFormControlSelect1">
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="expenseType" class="text-white">Amount</label>
+                    <input class="form-control rounded bg-dark text-white" type="number">
+                  </div>
+                  <button type="submit" class="btn btn-primary">Create expense</button>
+                </form>
+              </div>
+              <div class="col rounded bg-dark p-4">
+                <!--form-form delete employee-->
+                <form class="needs-validation" novalidate>
+                  <div class="form-group">
+                    <label for="inputDepartmentName" class="text-white">Employee</label>
+                    <select class="form-control bg-dark text-white" id="exampleFormControlSelect1">
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                    </select>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Delet employee</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--expense-->
+        <div class="tab-pane fade" id="v-pills-expense-types" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+          <div class="container-fluid">
+            <div class="row h-25 pb-3">
+              <div class="col table-wrapper bg-info rounded p-0 bg-dark">
+                <table id="departmentTable" class="table table-dark p-0 m-0">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">First</th>
+                      <th scope="col">Last</th>
+                      <th scope="col">Handle</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">1</th>
+                      <td>Mark</td>
+                      <td>Otto</td>
+                      <td>@mdo</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">2</th>
+                      <td>Jacob</td>
+                      <td>Thornton</td>
+                      <td>@fat</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">3</th>
+                      <td>Larry</td>
+                      <td>the Bird</td>
+                      <td>@twitter</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">1</th>
+                      <td>Mark</td>
+                      <td>Otto</td>
+                      <td>@mdo</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">1</th>
+                      <td>Mark</td>
+                      <td>Otto</td>
+                      <td>@mdo</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">1</th>
+                      <td>Mark</td>
+                      <td>Otto</td>
+                      <td>@mdo</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="w-100"></div>
+            </div>
+            <div class="row h-25 pb-3">
+              <div class="col rounded p-0 mr-3">
+                <div class="row-auto p-0 m-0 h-100">
+                  <div class="col rounded bg-danger mb-3 p-0">
+                    <div class="col rounded bg-dark p-4 mr-3">
+
+                      <form class="needs-validation" novalidate>
+                        <div class="form-group">
+                          <label for="inputDepartmentName" class="text-white">Department name</label>
+                          <input type="text" class="form-control bg-dark text-white" id="inputDepartmentName"
+                            aria-describedby="emailHelp" placeholder="Enter name" required>
+                          <small id="emailHelp" class="form-text text-muted">Unique name</small>
+                        </div>
+                        <div class="form-group">
+                          <label for="inputDepartmentBuget" class="text-white">Buget</label>
+                          <input type="number" class="form-control bg-dark text-white" id="inputDepartmentBuget"
+                            aria-describedby="emailHelp" placeholder="Enter buget" value="0" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Create department</button>
+                      </form>
+                    </div>
+                  </div>
+                  <div class="w-100 bg-danger"></div>
+                  <div class="col rounded m-0 p-0">
+                    <div class="row p-0 m-0">
+                      <div class="col p-0 mr-3">
+                        <div class="bg-dark p-4 mb-3 rounded text-white col">
+                          <span class="h4">total money</span>
+                          <div class="h2">
+                            <span>14881488</span><i class="fa-solid fa-dollar-sign"></i>
+                          </div>
+                        </div>
+                        <div class="bg-dark p-4 mb-3 rounded text-white col">
+                          <span class="h4">total money</span>
+                          <div class="h2">
+                            <span>14881488</span><i class="fa-solid fa-dollar-sign"></i>
+                          </div>
+                        </div>
+                      </div>
+                      <div class=" col p-0 m-0">
+                        <div class="bg-dark p-4 mb-3 rounded text-white col">
+                          <span class="h4">total money</span>
+                          <div class="h2">
+                            <span>14881488</span><i class="fa-solid fa-dollar-sign"></i>
+                          </div>
+                        </div>
+                        <div class="bg-dark p-4 mb-3 rounded text-white col">
+                          <span class="h4">total money</span>
+                          <div class="h2">
+                            <span>14881488</span><i class="fa-solid fa-dollar-sign"></i>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col rounded bg-dark p-4">
+                <form class="needs-validation" novalidate>
+                  <div class="form-row pb-3">
+                    <div class="col-4">
+                      <label class="text-white" for="selectDepartment">Department</label>
+                    </div>
+                    <div class="col">
+                      <input class="form-control rounded bg-dark text-white" type="number" name="month" value="0"
+                        id="month">
+                    </div>
+                  </div>
+                  <div class="form-row pb-3">
+                    <div class="col-4">
+                      <label class="text-white" for="selectDepartment">Department</label>
+                    </div>
+                    <div class="col">
+                      <input class="form-control rounded bg-dark text-white" type="number" name="month" value="0"
+                        id="month">
+                    </div>
+                  </div>
+                  <div class="form-row pb-3">
+                    <div class="col-4">
+                      <label class="text-white" for="selectDepartment">Department</label>
+                    </div>
+                    <div class="col">
+                      <input class="form-control rounded bg-dark text-white" type="number" name="month" value="0"
+                        id="month">
+                    </div>
+                  </div>
+                  <div class="form-row pb-3">
+                    <div class="col-4">
+                      <label class="text-white" for="selectDepartment">Department</label>
+                    </div>
+                    <div class="col">
+                      <input class="form-control rounded bg-dark text-white" type="number" name="month" value="0"
+                        id="month">
+                    </div>
+                  </div>
+                  <div class="form-row pb-3">
+                    <div class="col-4">
+                      <label class="text-white" for="selectDepartment">Department</label>
+                    </div>
+                    <div class="col">
+                      <input class="form-control rounded bg-dark text-white" type="number" name="month" value="0"
+                        id="month">
+                    </div>
+                  </div>
+                  <div class="form-row pb-3">
+                    <div class="col-4">
+                      <label class="text-white" for="selectDepartment">Department</label>
+                    </div>
+                    <div class="col">
+                      <input class="form-control rounded bg-dark text-white" type="number" name="month" value="0"
+                        id="month">
+                    </div>
+                  </div>
+                  <div class="form-row pb-3">
+                    <div class="col-4">
+                      <label class="text-white" for="selectDepartment">Department</label>
+                    </div>
+                    <div class="col">
+                      <input class="form-control rounded bg-dark text-white" type="number" name="month" value="0"
+                        id="month">
+                    </div>
+                  </div>
+                  <div class="form-row pb-3">
+                    <div class="col-4">
+                      <label class="text-white" for="selectDepartment">Department</label>
+                    </div>
+                    <div class="col">
+                      <input class="form-control rounded bg-dark text-white" type="number" name="month" value="0"
+                        id="month">
+                    </div>
+                  </div>
+                  <div class="form-row pb-3">
+                    <div class="col-4">
+                      <label class="text-white" for="selectDepartment">Department</label>
+                    </div>
+                    <div class="col">
+                      <input class="form-control rounded bg-dark text-white" type="number" name="month" value="0"
+                        id="month">
+                    </div>
+                  </div>
+                  <div class="form-row pb-3">
+                    <div class="col-4">
+                      <label class="text-white" for="selectDepartment">Department</label>
+                    </div>
+                    <div class="col">
+                      <input class="form-control rounded bg-dark text-white" type="number" name="month" value="0"
+                        id="month">
+                    </div>
+                  </div>
+                  <div class="form-row pb-3">
+                    <div class="col-4">
+                      <label class="text-white" for="selectDepartment">Department</label>
+                    </div>
+                    <div class="col">
+                      <input class="form-control rounded bg-dark text-white" type="number" name="month" value="0"
+                        id="month">
+                    </div>
+                  </div>
+                  <div class="form-row pb-3">
+                    <div class="col-4">
+                      <label class="text-white" for="selectDepartment">Department</label>
+                    </div>
+                    <div class="col">
+                      <input class="form-control rounded bg-dark text-white" type="number" name="month" value="0"
+                        id="month">
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Save Change</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--expense type-->
+        <div class="tab-pane fade" id="v-pills-expenses" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+          <div class="container-fluid">
+            <div class="row h-25 pb-3">
+              <div class="col table-wrapper bg-info rounded p-0 bg-dark">
+                <table id="departmentTable" class="table table-dark p-0 m-0">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">First</th>
+                      <th scope="col">Last</th>
+                      <th scope="col">Handle</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">1</th>
+                      <td>Mark</td>
+                      <td>Otto</td>
+                      <td>@mdo</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">2</th>
+                      <td>Jacob</td>
+                      <td>Thornton</td>
+                      <td>@fat</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">3</th>
+                      <td>Larry</td>
+                      <td>the Bird</td>
+                      <td>@twitter</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">1</th>
+                      <td>Mark</td>
+                      <td>Otto</td>
+                      <td>@mdo</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">1</th>
+                      <td>Mark</td>
+                      <td>Otto</td>
+                      <td>@mdo</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">1</th>
+                      <td>Mark</td>
+                      <td>Otto</td>
+                      <td>@mdo</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="w-100"></div>
+            </div>
+            <div class="row h-25 pb-3">
+              <div class="col rounded p-0 mr-3">
+                <div class="row-auto p-0 m-0 h-100">
+                  <div class="col rounded bg-danger mb-3 p-0">
+                    <div class="col rounded bg-dark p-4 mr-3">
+                      <form class="needs-validation" novalidate>
+                        <div class="form-group">
+                          <label for="inputDepartmentName" class="text-white">Department name</label>
+                          <input type="text" class="form-control bg-dark text-white" id="inputDepartmentName"
+                            aria-describedby="emailHelp" placeholder="Enter name" required>
+                          <small id="emailHelp" class="form-text text-muted">Unique name</small>
+                        </div>
+                        <div class="form-group">
+                          <label for="inputDepartmentBuget" class="text-white">Buget</label>
+                          <input type="number" class="form-control bg-dark text-white" id="inputDepartmentBuget"
+                            aria-describedby="emailHelp" placeholder="Enter buget" value="0" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Create department</button>
+                      </form>
+                    </div>
+                  </div>
+                  <div class="w-100 bg-danger"></div>
+                  <div class="col rounded m-0 p-0">
+                    <div class="row p-0 m-0">
+                      <div class="col p-0 mr-3">
+                        <div class="bg-dark p-4 mb-3 rounded text-white col">
+                          <span class="h4">total money</span>
+                          <div class="h2">
+                            <span>14881488</span><i class="fa-solid fa-dollar-sign"></i>
+                          </div>
+                        </div>
+                        <div class="bg-dark p-4 mb-3 rounded text-white col">
+                          <span class="h4">total money</span>
+                          <div class="h2">
+                            <span>14881488</span><i class="fa-solid fa-dollar-sign"></i>
+                          </div>
+                        </div>
+                      </div>
+                      <div class=" col p-0 m-0">
+                        <div class="bg-dark p-4 mb-3 rounded text-white col">
+                          <span class="h4">total money</span>
+                          <div class="h2">
+                            <span>14881488</span><i class="fa-solid fa-dollar-sign"></i>
+                          </div>
+                        </div>
+                        <div class="bg-dark p-4 mb-3 rounded text-white col">
+                          <span class="h4">total money</span>
+                          <div class="h2">
+                            <span>14881488</span><i class="fa-solid fa-dollar-sign"></i>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col rounded bg-dark p-4">
+                <form class="needs-validation" novalidate>
+                  <div class="form-row pb-3">
+                    <div class="col-4">
+                      <label class="text-white" for="selectDepartment">Department</label>
+                    </div>
+                    <div class="col">
+                      <input class="form-control rounded bg-dark text-white" type="number" name="month" value="0"
+                        id="month">
+                    </div>
+                  </div>
+                  <div class="form-row pb-3">
+                    <div class="col-4">
+                      <label class="text-white" for="selectDepartment">Department</label>
+                    </div>
+                    <div class="col">
+                      <input class="form-control rounded bg-dark text-white" type="number" name="month" value="0"
+                        id="month">
+                    </div>
+                  </div>
+                  <div class="form-row pb-3">
+                    <div class="col-4">
+                      <label class="text-white" for="selectDepartment">Department</label>
+                    </div>
+                    <div class="col">
+                      <input class="form-control rounded bg-dark text-white" type="number" name="month" value="0"
+                        id="month">
+                    </div>
+                  </div>
+                  <div class="form-row pb-3">
+                    <div class="col-4">
+                      <label class="text-white" for="selectDepartment">Department</label>
+                    </div>
+                    <div class="col">
+                      <input class="form-control rounded bg-dark text-white" type="number" name="month" value="0"
+                        id="month">
+                    </div>
+                  </div>
+                  <div class="form-row pb-3">
+                    <div class="col-4">
+                      <label class="text-white" for="selectDepartment">Department</label>
+                    </div>
+                    <div class="col">
+                      <input class="form-control rounded bg-dark text-white" type="number" name="month" value="0"
+                        id="month">
+                    </div>
+                  </div>
+                  <div class="form-row pb-3">
+                    <div class="col-4">
+                      <label class="text-white" for="selectDepartment">Department</label>
+                    </div>
+                    <div class="col">
+                      <input class="form-control rounded bg-dark text-white" type="number" name="month" value="0"
+                        id="month">
+                    </div>
+                  </div>
+                  <div class="form-row pb-3">
+                    <div class="col-4">
+                      <label class="text-white" for="selectDepartment">Department</label>
+                    </div>
+                    <div class="col">
+                      <input class="form-control rounded bg-dark text-white" type="number" name="month" value="0"
+                        id="month">
+                    </div>
+                  </div>
+                  <div class="form-row pb-3">
+                    <div class="col-4">
+                      <label class="text-white" for="selectDepartment">Department</label>
+                    </div>
+                    <div class="col">
+                      <input class="form-control rounded bg-dark text-white" type="number" name="month" value="0"
+                        id="month">
+                    </div>
+                  </div>
+                  <div class="form-row pb-3">
+                    <div class="col-4">
+                      <label class="text-white" for="selectDepartment">Department</label>
+                    </div>
+                    <div class="col">
+                      <input class="form-control rounded bg-dark text-white" type="number" name="month" value="0"
+                        id="month">
+                    </div>
+                  </div>
+                  <div class="form-row pb-3">
+                    <div class="col-4">
+                      <label class="text-white" for="selectDepartment">Department</label>
+                    </div>
+                    <div class="col">
+                      <input class="form-control rounded bg-dark text-white" type="number" name="month" value="0"
+                        id="month">
+                    </div>
+                  </div>
+                  <div class="form-row pb-3">
+                    <div class="col-4">
+                      <label class="text-white" for="selectDepartment">Department</label>
+                    </div>
+                    <div class="col">
+                      <input class="form-control rounded bg-dark text-white" type="number" name="month" value="0"
+                        id="month">
+                    </div>
+                  </div>
+                  <div class="form-row pb-3">
+                    <div class="col-4">
+                      <label class="text-white" for="selectDepartment">Department</label>
+                    </div>
+                    <div class="col">
+                      <input class="form-control rounded bg-dark text-white" type="number" name="month" value="0"
+                        id="month">
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Save Change</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
+  <footer>
+    <span>footer</span>
+  </footer>
+
+  <script src="/js/charts.js"></script>
+  <script src="/js/validation.js">
+  </script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <script src="/js/table.js"></script>
+</body>
+
+</html>
