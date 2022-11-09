@@ -1,0 +1,23 @@
+{
+  "name": "kursovayui",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Secret0-OchkA/KursovayUI.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Secret0-OchkA/KursovayUI/issues"
+  },
+  "homepage": "https://github.com/Secret0-OchkA/KursovayUI#readme",
+  "dependencies": {
+    "my_api_v1": "^1.0.0"
+  },
+  "devDependencies": {}
+}
