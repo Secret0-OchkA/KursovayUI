@@ -2,6 +2,7 @@
   "name": "kursovayui",
   "version": "1.0.0",
   "description": "",
+  "type": "commonjs",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -17,7 +18,8 @@
   },
   "homepage": "https://github.com/Secret0-OchkA/KursovayUI#readme",
   "dependencies": {
+    "express": "^4.18.2",
+    "jquery": "^3.6.1",
     "my_api_v1": "^1.0.0"
-  },
-  "devDependencies": {}
+  }
 }
