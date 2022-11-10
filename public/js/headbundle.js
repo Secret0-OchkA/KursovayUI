@@ -1,4 +1,13 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+//head boundle
+var $ = require("jquery");
+var _chart = require("chart.js");
+var MyApiV1 = reuire("my_api_v1");
+
+//body boundle
+//var _popper = require("popper.js");
+//var _bootstrap = require("bootstrap");
+},{"chart.js":2,"jquery":3}],2:[function(require,module,exports){
 /*!
  * Chart.js v3.9.1
  * https://www.chartjs.org
@@ -13525,7 +13534,7 @@ return Chart;
 
 }));
 
-},{}],2:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v3.6.1
  * https://jquery.com/
@@ -24436,14 +24445,4 @@ if ( typeof noGlobal === "undefined" ) {
 return jQuery;
 } );
 
-},{}],3:[function(require,module,exports){
-var $ = require("jquery");
-var _chart = require("chart.js");
-
-
-$(document).ready(function () {
-  $("p").click(function () {
-    $(this).hide();
-  });
-});
-},{"chart.js":1,"jquery":2}]},{},[3]);
+},{}]},{},[1]);

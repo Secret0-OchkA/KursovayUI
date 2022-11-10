@@ -1,4 +1,13 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+//head boundle
+//var $ = require("jquery");
+//var _chart = require("chart.js");
+//var MyApiV1 = reuire("my_api_v1");
+
+//body boundle
+var _popper = require("popper.js");
+var _bootstrap = require("bootstrap");
+},{"bootstrap":2,"popper.js":4}],2:[function(require,module,exports){
 /*!
   * Bootstrap v4.0.0 (https://getbootstrap.com)
   * Copyright 2011-2018 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
@@ -3894,7 +3903,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 })));
 
 
-},{"jquery":2,"popper.js":3}],2:[function(require,module,exports){
+},{"jquery":3,"popper.js":4}],3:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v3.6.1
  * https://jquery.com/
@@ -14805,7 +14814,7 @@ if ( typeof noGlobal === "undefined" ) {
 return jQuery;
 } );
 
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 (function (global){(function (){
 /**!
  * @fileOverview Kickass library to create and place poppers near their reference elements.
@@ -17433,18 +17442,4 @@ return Popper;
 
 
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],4:[function(require,module,exports){
-//var $ = require("jquery");
-//var _chart = require("chart.js");
-
-
-//$(document).ready(function () {
-//  $("p").click(function () {
-//    $(this).hide();
-//  });
-//});
-
-var $ = require("jquery");
-var _popper = require("popper.js");
-var _bootstrap = require("bootstrap");
-},{"bootstrap":1,"jquery":2,"popper.js":3}]},{},[4]);
+},{}]},{},[1]);
