@@ -2,10 +2,6 @@ const express = require("express");
 const cors = require('cors');
 const app = express();
 
-app.use(cors({
-  origin: 'http://localhost:49151/'
-}));
-
 app.use('/public', express.static(__dirname + '/public'));
 
 app.get("/", function (req, res) {

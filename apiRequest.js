@@ -3,6 +3,8 @@ var $ = require("jquery");
 
 
 let ApiClient = new MyApiV1.ApiClient("http://localhost:49151/");
+ApiClient.defaultHeaders = {
+}
 
 let companyApi = new MyApiV1.CompanyApi(ApiClient);
 
