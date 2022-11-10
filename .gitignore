@@ -1,2 +1,5 @@
 .devcontainer/
 node_modules/
+test.js
+test.html
+forBundle.js

@@ -1,6 +1,5 @@
 const express = require("express");
 var MyApiV1 = require('my_api_v1');
-//var $ = require("jquery");
 
 const app = express();
 
