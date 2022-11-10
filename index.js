@@ -11,18 +11,26 @@ app.listen(3000);
 
 
 
-var MyApiV1 = require("my_api_v1");
+//var MyApiV1 = require("my_api_v1");
 
-let ApiClient = new MyApiV1.ApiClient("http://api/");
+//let ApiClient = new MyApiV1.ApiClient("http://api/");
 
-let apiInstance = new MyApiV1.OkApi(ApiClient);
-let compApi = new MyApiV1.CompanyApi(ApiClient);
+//let apiInstance = new MyApiV1.OkApi(ApiClient);
+//let compApi = new MyApiV1.CompanyApi(ApiClient);
 
-console.log("start");
-compApi.getCompanyes((error, data, response) => {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + JSON.stringify(data));
-  }
-});
+//console.log("start");
+//compApi.getCompanyes((error, data, response) => {
+//  if (error) {
+//    console.error(error);
+//  } else {
+//    console.log('API called successfully. Returned data: ' + JSON.stringify(data));
+//  }
+//});
+
+//var $ = require("jquery");
+
+//$(document).ready(function () {
+//  $("p").click(function () {
+//    $(this).hide();
+//  });
+//});

@@ -1,4 +1,3 @@
-var $ = require("jquery");
 var _chart = require("chart.js");
 var _popper = require("popper.js");
 var _bootstrap = require("bootstrap");
