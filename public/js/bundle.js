@@ -2203,26 +2203,199 @@ exports.encode = exports.stringify = require('./encode');
 var MyApiV1 = require("my_api_v1");
 var $ = require("jquery");
 
+var companyId = 1;
 
 let ApiClient = new MyApiV1.ApiClient("http://localhost:49151/");
 ApiClient.defaultHeaders = {
 }
 
 let companyApi = new MyApiV1.CompanyApi(ApiClient);
+let departmentApi = new MyApiV1.DepartmentApi(ApiClient);
+let employeeApi = new MyApiV1.EmployeeApi(ApiClient);
+let empDepartmentApi = new MyApiV1.EmployeeFromDepartmentApi(ApiClient);
+let expEmployeeApi = new MyApiV1.ExpenseFromEmployeeApi(ApiClient);
+let expenseTypeApi = new MyApiV1.ExpenseTypeApi(ApiClient);
+let bugetPlanApi = new MyApiV1.BugetPlanApi(ApiClient);
 
 $(document).ready(function () {
-  $("#label").click(function () {
-    console.log("click");
-    companyApi.getCompanyes((error, data, response) => {
-      if (error) {
-        console.error(error);
-      } else {
-        console.log('Returned data: ' + JSON.stringify(data));
-      }
-    });
-  });
-});
 
+  UpdateDepartment();
+  UpdateExpenseType();
+  UpdateEmployee();
+
+  //TODO: ExpenseType====================================
+  {
+    ////Get
+    function UpdateExpenseType() {
+      expenseTypeApi.getEpxensTypesInCompany(companyId, (error, data, response) => {
+        if (error) {
+          console.error(error);
+        } else {
+          console.log(JSON.stringify(data));
+          let selectors = $(".select-expenseType")
+          selectors.empty();
+          for (let i = 0; i < data.length; i++) {
+            selectors.append(`<option value="${data[i].id}">${data[i].name}</option>`);
+          }
+        }
+      });
+    }
+    ////Create
+    $("#btn-c-expenseType").click(function () {
+
+      let expenseType = new MyApiV1.ExpenseTypeView();
+      expenseType.id = 0;
+      expenseType.name = $('#formCreateExpenseTypeName').val();
+      expenseType.description = $('#formCreateExpenseTypeDescription').val();
+      expenseType.limit = $('#formCreateExpenseTypeLimit').val();
+
+      let opts = {
+        'expenseTypeView': expenseType // DepartmentView | 
+      };
+      expenseTypeApi.createExpenseTypeInCompany(companyId, opts, (error, data, response) => {
+        if (error) {
+          console.error(JSON.stringify(response['body']));
+        } else {
+          console.log('Create ExpenseType');
+          UpdateExpenseType();
+        }
+      });
+    });
+    ////Delete
+    $("#btn-d-expenseType").click(function () {
+
+      let expenseTypeId = $("#formDeleteExpense").val() // Number | 
+      expenseTypeApi.deleteExpenseTypeInCompany(companyId, expenseTypeId, (error, data, response) => {
+        if (error) {
+          console.error(error);
+        } else {
+          console.log('Delet ExpenseType');
+          UpdateExpenseType();
+        }
+      });
+    });
+  }
+  //TODO: Expense=================================
+  ////Get
+
+  ////Delete
+
+  ////Create
+
+
+  //TODO: Employee=================================
+  {
+    ////Get
+    function UpdateEmployee() {
+      employeeApi.getEpxensTypesInCompany(companyId, (error, data, response) => {
+        if (error) {
+          console.error(error);
+        } else {
+          console.log(JSON.stringify(data));
+          let selectors = $(".select-expenseType")
+          selectors.empty();
+          for (let i = 0; i < data.length; i++) {
+            selectors.append(`<option value="${data[i].id}">${data[i].name}</option>`);
+          }
+        }
+      });
+    }
+    ////Create
+    $("#btn-c-employee").click(function () {
+
+      let expenseType = new MyApiV1.EmployeeView();
+      expenseType.id = 0;
+      expenseType.name = $('#inputEmployeeName').val();
+
+      let opts = {
+        'EmployeeView': expens = eType // DepartmentView | 
+      };
+      employeeApi.createEmployee(opts, (error, data, response) => {
+        if (error) {
+          console.error(JSON.stringify(response['body']));
+        } else {
+          console.log('Create Employee');
+          UpdateEmployee();
+        }
+      });
+    });
+    ////Delete
+    $("#btn-d-employee").click(function () {
+
+      let employeeId = $("#formDeleteEmployeeEmployee").val() // Number | 
+      employeeApi.deleteEmployee(employeeId, (error, data, response) => {
+        if (error) {
+          console.error(error);
+        } else {
+          console.log('Delet Employee');
+          UpdateEmployee();
+        }
+      });
+    });
+  }
+  //TODO: Department================================
+  {
+    //Get
+    function UpdateDepartment() {
+      departmentApi.getDepartments(companyId, (error, data, response) => {
+        if (error) {
+          console.error(error);
+        } else {
+          console.log(JSON.stringify(data));
+
+          let selectors = $(".select-department")
+          selectors.empty();
+          for (let i = 0; i < data.length; i++) {
+            selectors.append(`<option value="${data[i].id}">${data[i].name}</option>`);
+          }
+        }
+      });
+    }
+    //Create
+    $("#btn-c-department").click(function () {
+
+      let department = new MyApiV1.DepartmentView();
+      department.id = 0;
+      department.name = $('#formCreateDepartmentName').val();
+      department.buget = $('#formCreateDepartmentBuget').val();;
+
+      let opts = {
+        'departmentView': department // DepartmentView | 
+      };
+      departmentApi.createDepartment(companyId, opts, (error, data, response) => {
+        if (error) {
+          console.error(JSON.stringify(response['body']));
+        } else {
+          console.log('Create Department');
+          UpdateDepartment();
+        }
+      });
+    });
+    ////Delete
+    $("#btn-d-department").click(function () {
+      let opts = {
+        'departmnetId': $("#formDeleteDepartmentSelect").val() // Number | 
+      };
+      departmentApi.deleteDepartment(companyId, opts, (error, data, response) => {
+        if (error) {
+          console.error(error);
+        } else {
+          console.log('Delet Department');
+          UpdateDepartment();
+        }
+      });
+    });
+  }
+  //TODO: BugetPlan=================================
+  ////Get
+
+  //Create
+
+  //Delete
+
+  //SetMonthBuget
+
+});
 },{"jquery":11,"my_api_v1":22}],9:[function(require,module,exports){
 
 /**
@@ -14237,7 +14410,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _ApiClient = _interopRequireDefault(require("../ApiClient"));
-var _BugetPlan = _interopRequireDefault(require("../model/BugetPlan"));
+var _BugetPlanView = _interopRequireDefault(require("../model/BugetPlanView"));
 var _Month = _interopRequireDefault(require("../model/Month"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -14274,14 +14447,14 @@ var BugetPlanApi = /*#__PURE__*/function () {
    * @param {Number} companyId 
    * @param {Number} departmnetId 
    * @param {Object} opts Optional parameters
-   * @param {module:model/BugetPlan} opts.bugetPlan 
+   * @param {module:model/BugetPlanView} opts.bugetPlanView 
    * @param {module:api/BugetPlanApi~createBugetPlanCallback} callback The callback function, accepting three arguments: error, data, response
    */
   _createClass(BugetPlanApi, [{
     key: "createBugetPlan",
     value: function createBugetPlan(companyId, departmnetId, opts, callback) {
       opts = opts || {};
-      var postBody = opts['bugetPlan'];
+      var postBody = opts['bugetPlanView'];
       // verify the required parameter 'companyId' is set
       if (companyId === undefined || companyId === null) {
         throw new Error("Missing the required parameter 'companyId' when calling createBugetPlan");
@@ -14354,7 +14527,7 @@ var BugetPlanApi = /*#__PURE__*/function () {
      * Callback function to receive the result of the getBugetPlan operation.
      * @callback module:api/BugetPlanApi~getBugetPlanCallback
      * @param {String} error Error message, if any.
-     * @param {module:model/BugetPlan} data The data returned by the service call.
+     * @param {module:model/BugetPlanView} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -14364,7 +14537,7 @@ var BugetPlanApi = /*#__PURE__*/function () {
      * @param {Number} departmnetId 
      * @param {Number} bugetPlanId 
      * @param {module:api/BugetPlanApi~getBugetPlanCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link module:model/BugetPlan}
+     * data is of type: {@link module:model/BugetPlanView}
      */
   }, {
     key: "getBugetPlan",
@@ -14393,7 +14566,7 @@ var BugetPlanApi = /*#__PURE__*/function () {
       var authNames = [];
       var contentTypes = [];
       var accepts = ['application/json'];
-      var returnType = _BugetPlan["default"];
+      var returnType = _BugetPlanView["default"];
       return this.apiClient.callApi('/api/Company/{companyId}/Department/{departmnetId}/BugetPlan/{bugetPlanId}', 'GET', pathParams, queryParams, headerParams, formParams, postBody, authNames, contentTypes, accepts, returnType, null, callback);
     }
 
@@ -14401,7 +14574,7 @@ var BugetPlanApi = /*#__PURE__*/function () {
      * Callback function to receive the result of the setMonthBuget operation.
      * @callback module:api/BugetPlanApi~setMonthBugetCallback
      * @param {String} error Error message, if any.
-     * @param {module:model/BugetPlan} data The data returned by the service call.
+     * @param {module:model/BugetPlanView} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -14414,7 +14587,7 @@ var BugetPlanApi = /*#__PURE__*/function () {
      * @param {module:model/Month} opts.month 
      * @param {Number} opts.amount 
      * @param {module:api/BugetPlanApi~setMonthBugetCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link module:model/BugetPlan}
+     * data is of type: {@link module:model/BugetPlanView}
      */
   }, {
     key: "setMonthBuget",
@@ -14447,14 +14620,14 @@ var BugetPlanApi = /*#__PURE__*/function () {
       var authNames = [];
       var contentTypes = [];
       var accepts = ['application/json'];
-      var returnType = _BugetPlan["default"];
+      var returnType = _BugetPlanView["default"];
       return this.apiClient.callApi('/api/Company/{companyId}/Department/{departmnetId}/BugetPlan/{bugetPlanId}', 'PUT', pathParams, queryParams, headerParams, formParams, postBody, authNames, contentTypes, accepts, returnType, null, callback);
     }
   }]);
   return BugetPlanApi;
 }();
 exports["default"] = BugetPlanApi;
-},{"../ApiClient":12,"../model/BugetPlan":23,"../model/Month":29}],14:[function(require,module,exports){
+},{"../ApiClient":12,"../model/BugetPlanView":23,"../model/Month":29}],14:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -14462,7 +14635,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _ApiClient = _interopRequireDefault(require("../ApiClient"));
-var _Company = _interopRequireDefault(require("../model/Company"));
+var _CompanyView = _interopRequireDefault(require("../model/CompanyView"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -14489,7 +14662,7 @@ var CompanyApi = /*#__PURE__*/function () {
    * Callback function to receive the result of the changeName operation.
    * @callback module:api/CompanyApi~changeNameCallback
    * @param {String} error Error message, if any.
-   * @param {module:model/Company} data The data returned by the service call.
+   * @param {module:model/CompanyView} data The data returned by the service call.
    * @param {String} response The complete HTTP response.
    */
 
@@ -14498,7 +14671,7 @@ var CompanyApi = /*#__PURE__*/function () {
    * @param {Number} id 
    * @param {String} name 
    * @param {module:api/CompanyApi~changeNameCallback} callback The callback function, accepting three arguments: error, data, response
-   * data is of type: {@link module:model/Company}
+   * data is of type: {@link module:model/CompanyView}
    */
   _createClass(CompanyApi, [{
     key: "changeName",
@@ -14522,7 +14695,7 @@ var CompanyApi = /*#__PURE__*/function () {
       var authNames = [];
       var contentTypes = [];
       var accepts = ['application/json'];
-      var returnType = _Company["default"];
+      var returnType = _CompanyView["default"];
       return this.apiClient.callApi('/api/Company/{id}/{name}', 'PUT', pathParams, queryParams, headerParams, formParams, postBody, authNames, contentTypes, accepts, returnType, null, callback);
     }
 
@@ -14537,14 +14710,14 @@ var CompanyApi = /*#__PURE__*/function () {
     /**
      * create company from object
      * @param {Object} opts Optional parameters
-     * @param {module:model/Company} opts.company 
+     * @param {module:model/CompanyView} opts.companyView 
      * @param {module:api/CompanyApi~createCompanyCallback} callback The callback function, accepting three arguments: error, data, response
      */
   }, {
     key: "createCompany",
     value: function createCompany(opts, callback) {
       opts = opts || {};
-      var postBody = opts['company'];
+      var postBody = opts['companyView'];
       var pathParams = {};
       var queryParams = {};
       var headerParams = {};
@@ -14594,7 +14767,7 @@ var CompanyApi = /*#__PURE__*/function () {
      * Callback function to receive the result of the getCompany operation.
      * @callback module:api/CompanyApi~getCompanyCallback
      * @param {String} error Error message, if any.
-     * @param {module:model/Company} data The data returned by the service call.
+     * @param {module:model/CompanyView} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -14602,7 +14775,7 @@ var CompanyApi = /*#__PURE__*/function () {
      * get company by id
      * @param {Number} id 
      * @param {module:api/CompanyApi~getCompanyCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link module:model/Company}
+     * data is of type: {@link module:model/CompanyView}
      */
   }, {
     key: "getCompany",
@@ -14621,7 +14794,7 @@ var CompanyApi = /*#__PURE__*/function () {
       var authNames = [];
       var contentTypes = [];
       var accepts = ['application/json'];
-      var returnType = _Company["default"];
+      var returnType = _CompanyView["default"];
       return this.apiClient.callApi('/api/Company/{id}', 'GET', pathParams, queryParams, headerParams, formParams, postBody, authNames, contentTypes, accepts, returnType, null, callback);
     }
 
@@ -14629,14 +14802,14 @@ var CompanyApi = /*#__PURE__*/function () {
      * Callback function to receive the result of the getCompanyes operation.
      * @callback module:api/CompanyApi~getCompanyesCallback
      * @param {String} error Error message, if any.
-     * @param {Array.<module:model/Company>} data The data returned by the service call.
+     * @param {Array.<module:model/CompanyView>} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
     /**
      * get all company
      * @param {module:api/CompanyApi~getCompanyesCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link Array.<module:model/Company>}
+     * data is of type: {@link Array.<module:model/CompanyView>}
      */
   }, {
     key: "getCompanyes",
@@ -14649,14 +14822,14 @@ var CompanyApi = /*#__PURE__*/function () {
       var authNames = [];
       var contentTypes = [];
       var accepts = ['application/json'];
-      var returnType = [_Company["default"]];
+      var returnType = [_CompanyView["default"]];
       return this.apiClient.callApi('/api/Company', 'GET', pathParams, queryParams, headerParams, formParams, postBody, authNames, contentTypes, accepts, returnType, null, callback);
     }
   }]);
   return CompanyApi;
 }();
 exports["default"] = CompanyApi;
-},{"../ApiClient":12,"../model/Company":24}],15:[function(require,module,exports){
+},{"../ApiClient":12,"../model/CompanyView":24}],15:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -14664,7 +14837,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _ApiClient = _interopRequireDefault(require("../ApiClient"));
-var _Department = _interopRequireDefault(require("../model/Department"));
+var _DepartmentView = _interopRequireDefault(require("../model/DepartmentView"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -14699,14 +14872,14 @@ var DepartmentApi = /*#__PURE__*/function () {
    * create department in company
    * @param {Number} companyId 
    * @param {Object} opts Optional parameters
-   * @param {module:model/Department} opts.department 
+   * @param {module:model/DepartmentView} opts.departmentView 
    * @param {module:api/DepartmentApi~createDepartmentCallback} callback The callback function, accepting three arguments: error, data, response
    */
   _createClass(DepartmentApi, [{
     key: "createDepartment",
     value: function createDepartment(companyId, opts, callback) {
       opts = opts || {};
-      var postBody = opts['department'];
+      var postBody = opts['departmentView'];
       // verify the required parameter 'companyId' is set
       if (companyId === undefined || companyId === null) {
         throw new Error("Missing the required parameter 'companyId' when calling createDepartment");
@@ -14767,7 +14940,7 @@ var DepartmentApi = /*#__PURE__*/function () {
      * Callback function to receive the result of the getDepartment operation.
      * @callback module:api/DepartmentApi~getDepartmentCallback
      * @param {String} error Error message, if any.
-     * @param {module:model/Department} data The data returned by the service call.
+     * @param {module:model/DepartmentView} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -14776,7 +14949,7 @@ var DepartmentApi = /*#__PURE__*/function () {
      * @param {Number} companyId 
      * @param {Number} departmnetId 
      * @param {module:api/DepartmentApi~getDepartmentCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link module:model/Department}
+     * data is of type: {@link module:model/DepartmentView}
      */
   }, {
     key: "getDepartment",
@@ -14800,7 +14973,7 @@ var DepartmentApi = /*#__PURE__*/function () {
       var authNames = [];
       var contentTypes = [];
       var accepts = ['application/json'];
-      var returnType = _Department["default"];
+      var returnType = _DepartmentView["default"];
       return this.apiClient.callApi('/api/Company/{companyId}/Department/{departmnetId}', 'GET', pathParams, queryParams, headerParams, formParams, postBody, authNames, contentTypes, accepts, returnType, null, callback);
     }
 
@@ -14808,7 +14981,7 @@ var DepartmentApi = /*#__PURE__*/function () {
      * Callback function to receive the result of the getDepartments operation.
      * @callback module:api/DepartmentApi~getDepartmentsCallback
      * @param {String} error Error message, if any.
-     * @param {Array.<module:model/Department>} data The data returned by the service call.
+     * @param {Array.<module:model/DepartmentView>} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -14816,7 +14989,7 @@ var DepartmentApi = /*#__PURE__*/function () {
      * get departments in company
      * @param {Number} companyId 
      * @param {module:api/DepartmentApi~getDepartmentsCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link Array.<module:model/Department>}
+     * data is of type: {@link Array.<module:model/DepartmentView>}
      */
   }, {
     key: "getDepartments",
@@ -14835,7 +15008,7 @@ var DepartmentApi = /*#__PURE__*/function () {
       var authNames = [];
       var contentTypes = [];
       var accepts = ['application/json'];
-      var returnType = [_Department["default"]];
+      var returnType = [_DepartmentView["default"]];
       return this.apiClient.callApi('/api/Company/{companyId}/Department', 'GET', pathParams, queryParams, headerParams, formParams, postBody, authNames, contentTypes, accepts, returnType, null, callback);
     }
 
@@ -14843,7 +15016,7 @@ var DepartmentApi = /*#__PURE__*/function () {
      * Callback function to receive the result of the setBugetDeparmtnet operation.
      * @callback module:api/DepartmentApi~setBugetDeparmtnetCallback
      * @param {String} error Error message, if any.
-     * @param {module:model/Department} data The data returned by the service call.
+     * @param {module:model/DepartmentView} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -14854,7 +15027,7 @@ var DepartmentApi = /*#__PURE__*/function () {
      * @param {Object} opts Optional parameters
      * @param {Number} opts.buget 
      * @param {module:api/DepartmentApi~setBugetDeparmtnetCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link module:model/Department}
+     * data is of type: {@link module:model/DepartmentView}
      */
   }, {
     key: "setBugetDeparmtnet",
@@ -14881,14 +15054,14 @@ var DepartmentApi = /*#__PURE__*/function () {
       var authNames = [];
       var contentTypes = [];
       var accepts = ['application/json'];
-      var returnType = _Department["default"];
+      var returnType = _DepartmentView["default"];
       return this.apiClient.callApi('/api/Company/{companyId}/Department/{departmnetId}', 'PUT', pathParams, queryParams, headerParams, formParams, postBody, authNames, contentTypes, accepts, returnType, null, callback);
     }
   }]);
   return DepartmentApi;
 }();
 exports["default"] = DepartmentApi;
-},{"../ApiClient":12,"../model/Department":25}],16:[function(require,module,exports){
+},{"../ApiClient":12,"../model/DepartmentView":25}],16:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -14896,7 +15069,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _ApiClient = _interopRequireDefault(require("../ApiClient"));
-var _Employee = _interopRequireDefault(require("../model/Employee"));
+var _EmployeeView = _interopRequireDefault(require("../model/EmployeeView"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -14929,14 +15102,14 @@ var EmployeeApi = /*#__PURE__*/function () {
 
   /**
    * @param {Object} opts Optional parameters
-   * @param {module:model/Employee} opts.employee 
+   * @param {module:model/EmployeeView} opts.employeeView 
    * @param {module:api/EmployeeApi~createEmployeeCallback} callback The callback function, accepting three arguments: error, data, response
    */
   _createClass(EmployeeApi, [{
     key: "createEmployee",
     value: function createEmployee(opts, callback) {
       opts = opts || {};
-      var postBody = opts['employee'];
+      var postBody = opts['employeeView'];
       var pathParams = {};
       var queryParams = {};
       var headerParams = {};
@@ -14985,14 +15158,14 @@ var EmployeeApi = /*#__PURE__*/function () {
      * Callback function to receive the result of the getEmployee operation.
      * @callback module:api/EmployeeApi~getEmployeeCallback
      * @param {String} error Error message, if any.
-     * @param {module:model/Employee} data The data returned by the service call.
+     * @param {module:model/EmployeeView} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
     /**
      * @param {Number} id 
      * @param {module:api/EmployeeApi~getEmployeeCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link module:model/Employee}
+     * data is of type: {@link module:model/EmployeeView}
      */
   }, {
     key: "getEmployee",
@@ -15011,7 +15184,7 @@ var EmployeeApi = /*#__PURE__*/function () {
       var authNames = [];
       var contentTypes = [];
       var accepts = ['application/json'];
-      var returnType = _Employee["default"];
+      var returnType = _EmployeeView["default"];
       return this.apiClient.callApi('/api/Employee/{id}', 'GET', pathParams, queryParams, headerParams, formParams, postBody, authNames, contentTypes, accepts, returnType, null, callback);
     }
 
@@ -15019,13 +15192,13 @@ var EmployeeApi = /*#__PURE__*/function () {
      * Callback function to receive the result of the getEmployees operation.
      * @callback module:api/EmployeeApi~getEmployeesCallback
      * @param {String} error Error message, if any.
-     * @param {Array.<module:model/Employee>} data The data returned by the service call.
+     * @param {Array.<module:model/EmployeeView>} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
     /**
      * @param {module:api/EmployeeApi~getEmployeesCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link Array.<module:model/Employee>}
+     * data is of type: {@link Array.<module:model/EmployeeView>}
      */
   }, {
     key: "getEmployees",
@@ -15038,14 +15211,14 @@ var EmployeeApi = /*#__PURE__*/function () {
       var authNames = [];
       var contentTypes = [];
       var accepts = ['application/json'];
-      var returnType = [_Employee["default"]];
+      var returnType = [_EmployeeView["default"]];
       return this.apiClient.callApi('/api/Employee', 'GET', pathParams, queryParams, headerParams, formParams, postBody, authNames, contentTypes, accepts, returnType, null, callback);
     }
   }]);
   return EmployeeApi;
 }();
 exports["default"] = EmployeeApi;
-},{"../ApiClient":12,"../model/Employee":26}],17:[function(require,module,exports){
+},{"../ApiClient":12,"../model/EmployeeView":26}],17:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -15053,7 +15226,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _ApiClient = _interopRequireDefault(require("../ApiClient"));
-var _Employee = _interopRequireDefault(require("../model/Employee"));
+var _EmployeeView = _interopRequireDefault(require("../model/EmployeeView"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -15080,7 +15253,7 @@ var EmployeeFromDepartmentApi = /*#__PURE__*/function () {
    * Callback function to receive the result of the dismissEmployee operation.
    * @callback module:api/EmployeeFromDepartmentApi~dismissEmployeeCallback
    * @param {String} error Error message, if any.
-   * @param {module:model/Employee} data The data returned by the service call.
+   * @param {module:model/EmployeeView} data The data returned by the service call.
    * @param {String} response The complete HTTP response.
    */
 
@@ -15090,7 +15263,7 @@ var EmployeeFromDepartmentApi = /*#__PURE__*/function () {
    * @param {Number} departmnetId 
    * @param {Number} employeeId 
    * @param {module:api/EmployeeFromDepartmentApi~dismissEmployeeCallback} callback The callback function, accepting three arguments: error, data, response
-   * data is of type: {@link module:model/Employee}
+   * data is of type: {@link module:model/EmployeeView}
    */
   _createClass(EmployeeFromDepartmentApi, [{
     key: "dismissEmployee",
@@ -15119,7 +15292,7 @@ var EmployeeFromDepartmentApi = /*#__PURE__*/function () {
       var authNames = [];
       var contentTypes = [];
       var accepts = ['application/json'];
-      var returnType = _Employee["default"];
+      var returnType = _EmployeeView["default"];
       return this.apiClient.callApi('/api/Company/{companyId}/Department/{departmnetId}/EmployeeFromDepartment/{employeeId}', 'DELETE', pathParams, queryParams, headerParams, formParams, postBody, authNames, contentTypes, accepts, returnType, null, callback);
     }
 
@@ -15127,7 +15300,7 @@ var EmployeeFromDepartmentApi = /*#__PURE__*/function () {
      * Callback function to receive the result of the getEmployeeInDepartment operation.
      * @callback module:api/EmployeeFromDepartmentApi~getEmployeeInDepartmentCallback
      * @param {String} error Error message, if any.
-     * @param {module:model/Employee} data The data returned by the service call.
+     * @param {module:model/EmployeeView} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -15137,7 +15310,7 @@ var EmployeeFromDepartmentApi = /*#__PURE__*/function () {
      * @param {Number} departmnetId 
      * @param {Number} employeeId 
      * @param {module:api/EmployeeFromDepartmentApi~getEmployeeInDepartmentCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link module:model/Employee}
+     * data is of type: {@link module:model/EmployeeView}
      */
   }, {
     key: "getEmployeeInDepartment",
@@ -15166,7 +15339,7 @@ var EmployeeFromDepartmentApi = /*#__PURE__*/function () {
       var authNames = [];
       var contentTypes = [];
       var accepts = ['application/json'];
-      var returnType = _Employee["default"];
+      var returnType = _EmployeeView["default"];
       return this.apiClient.callApi('/api/Company/{companyId}/Department/{departmnetId}/EmployeeFromDepartment/{employeeId}', 'GET', pathParams, queryParams, headerParams, formParams, postBody, authNames, contentTypes, accepts, returnType, null, callback);
     }
 
@@ -15174,7 +15347,7 @@ var EmployeeFromDepartmentApi = /*#__PURE__*/function () {
      * Callback function to receive the result of the getEmployeesInDepartment operation.
      * @callback module:api/EmployeeFromDepartmentApi~getEmployeesInDepartmentCallback
      * @param {String} error Error message, if any.
-     * @param {Array.<module:model/Employee>} data The data returned by the service call.
+     * @param {Array.<module:model/EmployeeView>} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -15183,7 +15356,7 @@ var EmployeeFromDepartmentApi = /*#__PURE__*/function () {
      * @param {Number} companyId 
      * @param {Number} departmnetId 
      * @param {module:api/EmployeeFromDepartmentApi~getEmployeesInDepartmentCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link Array.<module:model/Employee>}
+     * data is of type: {@link Array.<module:model/EmployeeView>}
      */
   }, {
     key: "getEmployeesInDepartment",
@@ -15207,7 +15380,7 @@ var EmployeeFromDepartmentApi = /*#__PURE__*/function () {
       var authNames = [];
       var contentTypes = [];
       var accepts = ['application/json'];
-      var returnType = [_Employee["default"]];
+      var returnType = [_EmployeeView["default"]];
       return this.apiClient.callApi('/api/Company/{companyId}/Department/{departmnetId}/EmployeeFromDepartment', 'GET', pathParams, queryParams, headerParams, formParams, postBody, authNames, contentTypes, accepts, returnType, null, callback);
     }
 
@@ -15260,7 +15433,7 @@ var EmployeeFromDepartmentApi = /*#__PURE__*/function () {
   return EmployeeFromDepartmentApi;
 }();
 exports["default"] = EmployeeFromDepartmentApi;
-},{"../ApiClient":12,"../model/Employee":26}],18:[function(require,module,exports){
+},{"../ApiClient":12,"../model/EmployeeView":26}],18:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -15268,7 +15441,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _ApiClient = _interopRequireDefault(require("../ApiClient"));
-var _Expense = _interopRequireDefault(require("../model/Expense"));
+var _ExpenseView = _interopRequireDefault(require("../model/ExpenseView"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -15295,7 +15468,7 @@ var ExpenseFromDepartmentApi = /*#__PURE__*/function () {
    * Callback function to receive the result of the getExpenseInDeparment operation.
    * @callback module:api/ExpenseFromDepartmentApi~getExpenseInDeparmentCallback
    * @param {String} error Error message, if any.
-   * @param {module:model/Expense} data The data returned by the service call.
+   * @param {module:model/ExpenseView} data The data returned by the service call.
    * @param {String} response The complete HTTP response.
    */
 
@@ -15305,7 +15478,7 @@ var ExpenseFromDepartmentApi = /*#__PURE__*/function () {
    * @param {Number} departmnetId 
    * @param {Number} expenseId 
    * @param {module:api/ExpenseFromDepartmentApi~getExpenseInDeparmentCallback} callback The callback function, accepting three arguments: error, data, response
-   * data is of type: {@link module:model/Expense}
+   * data is of type: {@link module:model/ExpenseView}
    */
   _createClass(ExpenseFromDepartmentApi, [{
     key: "getExpenseInDeparment",
@@ -15334,7 +15507,7 @@ var ExpenseFromDepartmentApi = /*#__PURE__*/function () {
       var authNames = [];
       var contentTypes = [];
       var accepts = ['application/json'];
-      var returnType = _Expense["default"];
+      var returnType = _ExpenseView["default"];
       return this.apiClient.callApi('/api/Company/{companyId}/Department/{departmnetId}/ExpenseFromDepartment/{expenseId}', 'GET', pathParams, queryParams, headerParams, formParams, postBody, authNames, contentTypes, accepts, returnType, null, callback);
     }
 
@@ -15342,7 +15515,7 @@ var ExpenseFromDepartmentApi = /*#__PURE__*/function () {
      * Callback function to receive the result of the getExpesesInDepartment operation.
      * @callback module:api/ExpenseFromDepartmentApi~getExpesesInDepartmentCallback
      * @param {String} error Error message, if any.
-     * @param {Array.<module:model/Expense>} data The data returned by the service call.
+     * @param {Array.<module:model/ExpenseView>} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -15351,7 +15524,7 @@ var ExpenseFromDepartmentApi = /*#__PURE__*/function () {
      * @param {Number} companyId 
      * @param {Number} departmnetId 
      * @param {module:api/ExpenseFromDepartmentApi~getExpesesInDepartmentCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link Array.<module:model/Expense>}
+     * data is of type: {@link Array.<module:model/ExpenseView>}
      */
   }, {
     key: "getExpesesInDepartment",
@@ -15375,14 +15548,14 @@ var ExpenseFromDepartmentApi = /*#__PURE__*/function () {
       var authNames = [];
       var contentTypes = [];
       var accepts = ['application/json'];
-      var returnType = [_Expense["default"]];
+      var returnType = [_ExpenseView["default"]];
       return this.apiClient.callApi('/api/Company/{companyId}/Department/{departmnetId}/ExpenseFromDepartment', 'GET', pathParams, queryParams, headerParams, formParams, postBody, authNames, contentTypes, accepts, returnType, null, callback);
     }
   }]);
   return ExpenseFromDepartmentApi;
 }();
 exports["default"] = ExpenseFromDepartmentApi;
-},{"../ApiClient":12,"../model/Expense":27}],19:[function(require,module,exports){
+},{"../ApiClient":12,"../model/ExpenseView":28}],19:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -15390,7 +15563,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _ApiClient = _interopRequireDefault(require("../ApiClient"));
-var _Expense = _interopRequireDefault(require("../model/Expense"));
+var _ExpenseView = _interopRequireDefault(require("../model/ExpenseView"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -15417,7 +15590,7 @@ var ExpenseFromEmployeeApi = /*#__PURE__*/function () {
    * Callback function to receive the result of the changeAmmount operation.
    * @callback module:api/ExpenseFromEmployeeApi~changeAmmountCallback
    * @param {String} error Error message, if any.
-   * @param {module:model/Expense} data The data returned by the service call.
+   * @param {module:model/ExpenseView} data The data returned by the service call.
    * @param {String} response The complete HTTP response.
    */
 
@@ -15428,7 +15601,7 @@ var ExpenseFromEmployeeApi = /*#__PURE__*/function () {
    * @param {Object} opts Optional parameters
    * @param {Number} opts.amount 
    * @param {module:api/ExpenseFromEmployeeApi~changeAmmountCallback} callback The callback function, accepting three arguments: error, data, response
-   * data is of type: {@link module:model/Expense}
+   * data is of type: {@link module:model/ExpenseView}
    */
   _createClass(ExpenseFromEmployeeApi, [{
     key: "changeAmmount",
@@ -15455,7 +15628,7 @@ var ExpenseFromEmployeeApi = /*#__PURE__*/function () {
       var authNames = [];
       var contentTypes = [];
       var accepts = ['application/json'];
-      var returnType = _Expense["default"];
+      var returnType = _ExpenseView["default"];
       return this.apiClient.callApi('/api/Employee/{employeeId}/ExpenseFromEmployee/{expenseId}/ChangeAmmount', 'PUT', pathParams, queryParams, headerParams, formParams, postBody, authNames, contentTypes, accepts, returnType, null, callback);
     }
 
@@ -15463,7 +15636,7 @@ var ExpenseFromEmployeeApi = /*#__PURE__*/function () {
      * Callback function to receive the result of the confirmExpense operation.
      * @callback module:api/ExpenseFromEmployeeApi~confirmExpenseCallback
      * @param {String} error Error message, if any.
-     * @param {module:model/Expense} data The data returned by the service call.
+     * @param {module:model/ExpenseView} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -15472,7 +15645,7 @@ var ExpenseFromEmployeeApi = /*#__PURE__*/function () {
      * @param {Number} employeeId 
      * @param {Number} expenseId 
      * @param {module:api/ExpenseFromEmployeeApi~confirmExpenseCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link module:model/Expense}
+     * data is of type: {@link module:model/ExpenseView}
      */
   }, {
     key: "confirmExpense",
@@ -15496,7 +15669,7 @@ var ExpenseFromEmployeeApi = /*#__PURE__*/function () {
       var authNames = [];
       var contentTypes = [];
       var accepts = ['application/json'];
-      var returnType = _Expense["default"];
+      var returnType = _ExpenseView["default"];
       return this.apiClient.callApi('/api/Employee/{employeeId}/ExpenseFromEmployee/{expenseId}/Confirm', 'PUT', pathParams, queryParams, headerParams, formParams, postBody, authNames, contentTypes, accepts, returnType, null, callback);
     }
 
@@ -15512,14 +15685,14 @@ var ExpenseFromEmployeeApi = /*#__PURE__*/function () {
      * create expense for employee
      * @param {Number} employeeId 
      * @param {Object} opts Optional parameters
-     * @param {module:model/Expense} opts.expense 
+     * @param {module:model/ExpenseView} opts.expenseView 
      * @param {module:api/ExpenseFromEmployeeApi~createExpenseCallback} callback The callback function, accepting three arguments: error, data, response
      */
   }, {
     key: "createExpense",
     value: function createExpense(employeeId, opts, callback) {
       opts = opts || {};
-      var postBody = opts['expense'];
+      var postBody = opts['expenseView'];
       // verify the required parameter 'employeeId' is set
       if (employeeId === undefined || employeeId === null) {
         throw new Error("Missing the required parameter 'employeeId' when calling createExpense");
@@ -15538,10 +15711,50 @@ var ExpenseFromEmployeeApi = /*#__PURE__*/function () {
     }
 
     /**
+     * Callback function to receive the result of the deleteExpense operation.
+     * @callback module:api/ExpenseFromEmployeeApi~deleteExpenseCallback
+     * @param {String} error Error message, if any.
+     * @param data This operation does not return a value.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Delete expense
+     * @param {Number} id 
+     * @param {String} employeeId 
+     * @param {module:api/ExpenseFromEmployeeApi~deleteExpenseCallback} callback The callback function, accepting three arguments: error, data, response
+     */
+  }, {
+    key: "deleteExpense",
+    value: function deleteExpense(id, employeeId, callback) {
+      var postBody = null;
+      // verify the required parameter 'id' is set
+      if (id === undefined || id === null) {
+        throw new Error("Missing the required parameter 'id' when calling deleteExpense");
+      }
+      // verify the required parameter 'employeeId' is set
+      if (employeeId === undefined || employeeId === null) {
+        throw new Error("Missing the required parameter 'employeeId' when calling deleteExpense");
+      }
+      var pathParams = {
+        'id': id,
+        'employeeId': employeeId
+      };
+      var queryParams = {};
+      var headerParams = {};
+      var formParams = {};
+      var authNames = [];
+      var contentTypes = [];
+      var accepts = [];
+      var returnType = null;
+      return this.apiClient.callApi('/api/Employee/{employeeId}/ExpenseFromEmployee/{id}', 'DELETE', pathParams, queryParams, headerParams, formParams, postBody, authNames, contentTypes, accepts, returnType, null, callback);
+    }
+
+    /**
      * Callback function to receive the result of the getExpense operation.
      * @callback module:api/ExpenseFromEmployeeApi~getExpenseCallback
      * @param {String} error Error message, if any.
-     * @param {module:model/Expense} data The data returned by the service call.
+     * @param {module:model/ExpenseView} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -15550,7 +15763,7 @@ var ExpenseFromEmployeeApi = /*#__PURE__*/function () {
      * @param {Number} employeeId 
      * @param {Number} expenseId 
      * @param {module:api/ExpenseFromEmployeeApi~getExpenseCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link module:model/Expense}
+     * data is of type: {@link module:model/ExpenseView}
      */
   }, {
     key: "getExpense",
@@ -15574,7 +15787,7 @@ var ExpenseFromEmployeeApi = /*#__PURE__*/function () {
       var authNames = [];
       var contentTypes = [];
       var accepts = ['application/json'];
-      var returnType = _Expense["default"];
+      var returnType = _ExpenseView["default"];
       return this.apiClient.callApi('/api/Employee/{employeeId}/ExpenseFromEmployee/{expenseId}', 'GET', pathParams, queryParams, headerParams, formParams, postBody, authNames, contentTypes, accepts, returnType, null, callback);
     }
 
@@ -15582,7 +15795,7 @@ var ExpenseFromEmployeeApi = /*#__PURE__*/function () {
      * Callback function to receive the result of the getExpenses operation.
      * @callback module:api/ExpenseFromEmployeeApi~getExpensesCallback
      * @param {String} error Error message, if any.
-     * @param {Array.<module:model/Expense>} data The data returned by the service call.
+     * @param {Array.<module:model/ExpenseView>} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -15590,7 +15803,7 @@ var ExpenseFromEmployeeApi = /*#__PURE__*/function () {
      * get expenses in emploee
      * @param {Number} employeeId 
      * @param {module:api/ExpenseFromEmployeeApi~getExpensesCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link Array.<module:model/Expense>}
+     * data is of type: {@link Array.<module:model/ExpenseView>}
      */
   }, {
     key: "getExpenses",
@@ -15609,7 +15822,7 @@ var ExpenseFromEmployeeApi = /*#__PURE__*/function () {
       var authNames = [];
       var contentTypes = [];
       var accepts = ['application/json'];
-      var returnType = [_Expense["default"]];
+      var returnType = [_ExpenseView["default"]];
       return this.apiClient.callApi('/api/Employee/{employeeId}/ExpenseFromEmployee', 'GET', pathParams, queryParams, headerParams, formParams, postBody, authNames, contentTypes, accepts, returnType, null, callback);
     }
 
@@ -15617,7 +15830,7 @@ var ExpenseFromEmployeeApi = /*#__PURE__*/function () {
      * Callback function to receive the result of the setExpenseType operation.
      * @callback module:api/ExpenseFromEmployeeApi~setExpenseTypeCallback
      * @param {String} error Error message, if any.
-     * @param {module:model/Expense} data The data returned by the service call.
+     * @param {module:model/ExpenseView} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -15627,7 +15840,7 @@ var ExpenseFromEmployeeApi = /*#__PURE__*/function () {
      * @param {Number} expenseId 
      * @param {Number} expenseTypeId 
      * @param {module:api/ExpenseFromEmployeeApi~setExpenseTypeCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link module:model/Expense}
+     * data is of type: {@link module:model/ExpenseView}
      */
   }, {
     key: "setExpenseType",
@@ -15656,7 +15869,7 @@ var ExpenseFromEmployeeApi = /*#__PURE__*/function () {
       var authNames = [];
       var contentTypes = [];
       var accepts = ['application/json'];
-      var returnType = _Expense["default"];
+      var returnType = _ExpenseView["default"];
       return this.apiClient.callApi('/api/Employee/{employeeId}/ExpenseFromEmployee/{expenseId}/SetType/{expenseTypeId}', 'PUT', pathParams, queryParams, headerParams, formParams, postBody, authNames, contentTypes, accepts, returnType, null, callback);
     }
 
@@ -15664,7 +15877,7 @@ var ExpenseFromEmployeeApi = /*#__PURE__*/function () {
      * Callback function to receive the result of the validateEpxense operation.
      * @callback module:api/ExpenseFromEmployeeApi~validateEpxenseCallback
      * @param {String} error Error message, if any.
-     * @param {module:model/Expense} data The data returned by the service call.
+     * @param {module:model/ExpenseView} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -15673,7 +15886,7 @@ var ExpenseFromEmployeeApi = /*#__PURE__*/function () {
      * @param {Number} employeeId 
      * @param {Number} expenseId 
      * @param {module:api/ExpenseFromEmployeeApi~validateEpxenseCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link module:model/Expense}
+     * data is of type: {@link module:model/ExpenseView}
      */
   }, {
     key: "validateEpxense",
@@ -15697,14 +15910,14 @@ var ExpenseFromEmployeeApi = /*#__PURE__*/function () {
       var authNames = [];
       var contentTypes = [];
       var accepts = ['application/json'];
-      var returnType = _Expense["default"];
+      var returnType = _ExpenseView["default"];
       return this.apiClient.callApi('/api/Employee/{employeeId}/ExpenseFromEmployee/{expenseId}/Validate', 'PUT', pathParams, queryParams, headerParams, formParams, postBody, authNames, contentTypes, accepts, returnType, null, callback);
     }
   }]);
   return ExpenseFromEmployeeApi;
 }();
 exports["default"] = ExpenseFromEmployeeApi;
-},{"../ApiClient":12,"../model/Expense":27}],20:[function(require,module,exports){
+},{"../ApiClient":12,"../model/ExpenseView":28}],20:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -15712,7 +15925,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _ApiClient = _interopRequireDefault(require("../ApiClient"));
-var _ExpenseType = _interopRequireDefault(require("../model/ExpenseType"));
+var _ExpenseTypeView = _interopRequireDefault(require("../model/ExpenseTypeView"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -15747,14 +15960,14 @@ var ExpenseTypeApi = /*#__PURE__*/function () {
    * create new expenseType in company
    * @param {Number} companyId 
    * @param {Object} opts Optional parameters
-   * @param {module:model/ExpenseType} opts.expenseType 
+   * @param {module:model/ExpenseTypeView} opts.expenseTypeView 
    * @param {module:api/ExpenseTypeApi~createExpenseTypeInCompanyCallback} callback The callback function, accepting three arguments: error, data, response
    */
   _createClass(ExpenseTypeApi, [{
     key: "createExpenseTypeInCompany",
     value: function createExpenseTypeInCompany(companyId, opts, callback) {
       opts = opts || {};
-      var postBody = opts['expenseType'];
+      var postBody = opts['expenseTypeView'];
       // verify the required parameter 'companyId' is set
       if (companyId === undefined || companyId === null) {
         throw new Error("Missing the required parameter 'companyId' when calling createExpenseTypeInCompany");
@@ -15816,7 +16029,7 @@ var ExpenseTypeApi = /*#__PURE__*/function () {
      * Callback function to receive the result of the getEpxensTypesInCompany operation.
      * @callback module:api/ExpenseTypeApi~getEpxensTypesInCompanyCallback
      * @param {String} error Error message, if any.
-     * @param {Array.<module:model/ExpenseType>} data The data returned by the service call.
+     * @param {Array.<module:model/ExpenseTypeView>} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -15824,7 +16037,7 @@ var ExpenseTypeApi = /*#__PURE__*/function () {
      * get expense types in company
      * @param {Number} companyId 
      * @param {module:api/ExpenseTypeApi~getEpxensTypesInCompanyCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link Array.<module:model/ExpenseType>}
+     * data is of type: {@link Array.<module:model/ExpenseTypeView>}
      */
   }, {
     key: "getEpxensTypesInCompany",
@@ -15843,7 +16056,7 @@ var ExpenseTypeApi = /*#__PURE__*/function () {
       var authNames = [];
       var contentTypes = [];
       var accepts = ['application/json'];
-      var returnType = [_ExpenseType["default"]];
+      var returnType = [_ExpenseTypeView["default"]];
       return this.apiClient.callApi('/api/Company/{companyId}/ExpenseType', 'GET', pathParams, queryParams, headerParams, formParams, postBody, authNames, contentTypes, accepts, returnType, null, callback);
     }
 
@@ -15851,7 +16064,7 @@ var ExpenseTypeApi = /*#__PURE__*/function () {
      * Callback function to receive the result of the getExpenseTypeInCompany operation.
      * @callback module:api/ExpenseTypeApi~getExpenseTypeInCompanyCallback
      * @param {String} error Error message, if any.
-     * @param {module:model/ExpenseType} data The data returned by the service call.
+     * @param {module:model/ExpenseTypeView} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -15860,7 +16073,7 @@ var ExpenseTypeApi = /*#__PURE__*/function () {
      * @param {Number} companyId 
      * @param {Number} expenseTypeId 
      * @param {module:api/ExpenseTypeApi~getExpenseTypeInCompanyCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link module:model/ExpenseType}
+     * data is of type: {@link module:model/ExpenseTypeView}
      */
   }, {
     key: "getExpenseTypeInCompany",
@@ -15884,7 +16097,7 @@ var ExpenseTypeApi = /*#__PURE__*/function () {
       var authNames = [];
       var contentTypes = [];
       var accepts = ['application/json'];
-      var returnType = _ExpenseType["default"];
+      var returnType = _ExpenseTypeView["default"];
       return this.apiClient.callApi('/api/Company/{companyId}/ExpenseType/{expenseTypeId}', 'GET', pathParams, queryParams, headerParams, formParams, postBody, authNames, contentTypes, accepts, returnType, null, callback);
     }
 
@@ -15901,14 +16114,14 @@ var ExpenseTypeApi = /*#__PURE__*/function () {
      * @param {Number} companyId 
      * @param {Number} expenseTypeId 
      * @param {Object} opts Optional parameters
-     * @param {module:model/ExpenseType} opts.expenseType 
+     * @param {module:model/ExpenseTypeView} opts.expenseTypeView 
      * @param {module:api/ExpenseTypeApi~updateExpenseTypeCallback} callback The callback function, accepting three arguments: error, data, response
      */
   }, {
     key: "updateExpenseType",
     value: function updateExpenseType(companyId, expenseTypeId, opts, callback) {
       opts = opts || {};
-      var postBody = opts['expenseType'];
+      var postBody = opts['expenseTypeView'];
       // verify the required parameter 'companyId' is set
       if (companyId === undefined || companyId === null) {
         throw new Error("Missing the required parameter 'companyId' when calling updateExpenseType");
@@ -15934,7 +16147,7 @@ var ExpenseTypeApi = /*#__PURE__*/function () {
   return ExpenseTypeApi;
 }();
 exports["default"] = ExpenseTypeApi;
-},{"../ApiClient":12,"../model/ExpenseType":28}],21:[function(require,module,exports){
+},{"../ApiClient":12,"../model/ExpenseTypeView":27}],21:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -16006,22 +16219,16 @@ Object.defineProperty(exports, "ApiClient", {
     return _ApiClient["default"];
   }
 });
-Object.defineProperty(exports, "BugetPlan", {
-  enumerable: true,
-  get: function get() {
-    return _BugetPlan["default"];
-  }
-});
 Object.defineProperty(exports, "BugetPlanApi", {
   enumerable: true,
   get: function get() {
     return _BugetPlanApi["default"];
   }
 });
-Object.defineProperty(exports, "Company", {
+Object.defineProperty(exports, "BugetPlanView", {
   enumerable: true,
   get: function get() {
-    return _Company["default"];
+    return _BugetPlanView["default"];
   }
 });
 Object.defineProperty(exports, "CompanyApi", {
@@ -16030,10 +16237,10 @@ Object.defineProperty(exports, "CompanyApi", {
     return _CompanyApi["default"];
   }
 });
-Object.defineProperty(exports, "Department", {
+Object.defineProperty(exports, "CompanyView", {
   enumerable: true,
   get: function get() {
-    return _Department["default"];
+    return _CompanyView["default"];
   }
 });
 Object.defineProperty(exports, "DepartmentApi", {
@@ -16042,10 +16249,10 @@ Object.defineProperty(exports, "DepartmentApi", {
     return _DepartmentApi["default"];
   }
 });
-Object.defineProperty(exports, "Employee", {
+Object.defineProperty(exports, "DepartmentView", {
   enumerable: true,
   get: function get() {
-    return _Employee["default"];
+    return _DepartmentView["default"];
   }
 });
 Object.defineProperty(exports, "EmployeeApi", {
@@ -16060,10 +16267,10 @@ Object.defineProperty(exports, "EmployeeFromDepartmentApi", {
     return _EmployeeFromDepartmentApi["default"];
   }
 });
-Object.defineProperty(exports, "Expense", {
+Object.defineProperty(exports, "EmployeeView", {
   enumerable: true,
   get: function get() {
-    return _Expense["default"];
+    return _EmployeeView["default"];
   }
 });
 Object.defineProperty(exports, "ExpenseFromDepartmentApi", {
@@ -16078,16 +16285,22 @@ Object.defineProperty(exports, "ExpenseFromEmployeeApi", {
     return _ExpenseFromEmployeeApi["default"];
   }
 });
-Object.defineProperty(exports, "ExpenseType", {
-  enumerable: true,
-  get: function get() {
-    return _ExpenseType["default"];
-  }
-});
 Object.defineProperty(exports, "ExpenseTypeApi", {
   enumerable: true,
   get: function get() {
     return _ExpenseTypeApi["default"];
+  }
+});
+Object.defineProperty(exports, "ExpenseTypeView", {
+  enumerable: true,
+  get: function get() {
+    return _ExpenseTypeView["default"];
+  }
+});
+Object.defineProperty(exports, "ExpenseView", {
+  enumerable: true,
+  get: function get() {
+    return _ExpenseView["default"];
   }
 });
 Object.defineProperty(exports, "Month", {
@@ -16103,12 +16316,12 @@ Object.defineProperty(exports, "OkApi", {
   }
 });
 var _ApiClient = _interopRequireDefault(require("./ApiClient"));
-var _BugetPlan = _interopRequireDefault(require("./model/BugetPlan"));
-var _Company = _interopRequireDefault(require("./model/Company"));
-var _Department = _interopRequireDefault(require("./model/Department"));
-var _Employee = _interopRequireDefault(require("./model/Employee"));
-var _Expense = _interopRequireDefault(require("./model/Expense"));
-var _ExpenseType = _interopRequireDefault(require("./model/ExpenseType"));
+var _BugetPlanView = _interopRequireDefault(require("./model/BugetPlanView"));
+var _CompanyView = _interopRequireDefault(require("./model/CompanyView"));
+var _DepartmentView = _interopRequireDefault(require("./model/DepartmentView"));
+var _EmployeeView = _interopRequireDefault(require("./model/EmployeeView"));
+var _ExpenseTypeView = _interopRequireDefault(require("./model/ExpenseTypeView"));
+var _ExpenseView = _interopRequireDefault(require("./model/ExpenseView"));
 var _Month = _interopRequireDefault(require("./model/Month"));
 var _BugetPlanApi = _interopRequireDefault(require("./api/BugetPlanApi"));
 var _CompanyApi = _interopRequireDefault(require("./api/CompanyApi"));
@@ -16120,7 +16333,7 @@ var _ExpenseFromEmployeeApi = _interopRequireDefault(require("./api/ExpenseFromE
 var _ExpenseTypeApi = _interopRequireDefault(require("./api/ExpenseTypeApi"));
 var _OkApi = _interopRequireDefault(require("./api/OkApi"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-},{"./ApiClient":12,"./api/BugetPlanApi":13,"./api/CompanyApi":14,"./api/DepartmentApi":15,"./api/EmployeeApi":16,"./api/EmployeeFromDepartmentApi":17,"./api/ExpenseFromDepartmentApi":18,"./api/ExpenseFromEmployeeApi":19,"./api/ExpenseTypeApi":20,"./api/OkApi":21,"./model/BugetPlan":23,"./model/Company":24,"./model/Department":25,"./model/Employee":26,"./model/Expense":27,"./model/ExpenseType":28,"./model/Month":29}],23:[function(require,module,exports){
+},{"./ApiClient":12,"./api/BugetPlanApi":13,"./api/CompanyApi":14,"./api/DepartmentApi":15,"./api/EmployeeApi":16,"./api/EmployeeFromDepartmentApi":17,"./api/ExpenseFromDepartmentApi":18,"./api/ExpenseFromEmployeeApi":19,"./api/ExpenseTypeApi":20,"./api/OkApi":21,"./model/BugetPlanView":23,"./model/CompanyView":24,"./model/DepartmentView":25,"./model/EmployeeView":26,"./model/ExpenseTypeView":27,"./model/ExpenseView":28,"./model/Month":29}],23:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -16133,18 +16346,18 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 /**
- * The BugetPlan model module.
- * @module model/BugetPlan
+ * The BugetPlanView model module.
+ * @module model/BugetPlanView
  * @version v1
  */
-var BugetPlan = /*#__PURE__*/function () {
+var BugetPlanView = /*#__PURE__*/function () {
   /**
-   * Constructs a new <code>BugetPlan</code>.
-   * @alias module:model/BugetPlan
+   * Constructs a new <code>BugetPlanView</code>.
+   * @alias module:model/BugetPlanView
    */
-  function BugetPlan() {
-    _classCallCheck(this, BugetPlan);
-    BugetPlan.initialize(this);
+  function BugetPlanView() {
+    _classCallCheck(this, BugetPlanView);
+    BugetPlanView.initialize(this);
   }
 
   /**
@@ -16152,30 +16365,24 @@ var BugetPlan = /*#__PURE__*/function () {
    * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
    * Only for internal use.
    */
-  _createClass(BugetPlan, null, [{
+  _createClass(BugetPlanView, null, [{
     key: "initialize",
     value: function initialize(obj) {}
 
     /**
-     * Constructs a <code>BugetPlan</code> from a plain JavaScript object, optionally creating a new instance.
+     * Constructs a <code>BugetPlanView</code> from a plain JavaScript object, optionally creating a new instance.
      * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
      * @param {Object} data The plain JavaScript object bearing properties of interest.
-     * @param {module:model/BugetPlan} obj Optional instance to populate.
-     * @return {module:model/BugetPlan} The populated <code>BugetPlan</code> instance.
+     * @param {module:model/BugetPlanView} obj Optional instance to populate.
+     * @return {module:model/BugetPlanView} The populated <code>BugetPlanView</code> instance.
      */
   }, {
     key: "constructFromObject",
     value: function constructFromObject(data, obj) {
       if (data) {
-        obj = obj || new BugetPlan();
+        obj = obj || new BugetPlanView();
         if (data.hasOwnProperty('id')) {
           obj['id'] = _ApiClient["default"].convertToType(data['id'], 'Number');
-        }
-        if (data.hasOwnProperty('createDate')) {
-          obj['createDate'] = _ApiClient["default"].convertToType(data['createDate'], 'Date');
-        }
-        if (data.hasOwnProperty('modifyDate')) {
-          obj['modifyDate'] = _ApiClient["default"].convertToType(data['modifyDate'], 'Date');
         }
         if (data.hasOwnProperty('january')) {
           obj['january'] = _ApiClient["default"].convertToType(data['january'], 'Number');
@@ -16218,9 +16425,9 @@ var BugetPlan = /*#__PURE__*/function () {
     }
 
     /**
-     * Validates the JSON data with respect to <code>BugetPlan</code>.
+     * Validates the JSON data with respect to <code>BugetPlanView</code>.
      * @param {Object} data The plain JavaScript object bearing properties of interest.
-     * @return {boolean} to indicate whether the JSON data is valid with respect to <code>BugetPlan</code>.
+     * @return {boolean} to indicate whether the JSON data is valid with respect to <code>BugetPlanView</code>.
      */
   }, {
     key: "validateJSON",
@@ -16228,83 +16435,73 @@ var BugetPlan = /*#__PURE__*/function () {
       return true;
     }
   }]);
-  return BugetPlan;
+  return BugetPlanView;
 }();
 /**
  * @member {Number} id
  */
-BugetPlan.prototype['id'] = undefined;
-
-/**
- * @member {Date} createDate
- */
-BugetPlan.prototype['createDate'] = undefined;
-
-/**
- * @member {Date} modifyDate
- */
-BugetPlan.prototype['modifyDate'] = undefined;
+BugetPlanView.prototype['id'] = undefined;
 
 /**
  * @member {Number} january
  */
-BugetPlan.prototype['january'] = undefined;
+BugetPlanView.prototype['january'] = undefined;
 
 /**
  * @member {Number} february
  */
-BugetPlan.prototype['february'] = undefined;
+BugetPlanView.prototype['february'] = undefined;
 
 /**
  * @member {Number} march
  */
-BugetPlan.prototype['march'] = undefined;
+BugetPlanView.prototype['march'] = undefined;
 
 /**
  * @member {Number} april
  */
-BugetPlan.prototype['april'] = undefined;
+BugetPlanView.prototype['april'] = undefined;
 
 /**
  * @member {Number} may
  */
-BugetPlan.prototype['may'] = undefined;
+BugetPlanView.prototype['may'] = undefined;
 
 /**
  * @member {Number} june
  */
-BugetPlan.prototype['june'] = undefined;
+BugetPlanView.prototype['june'] = undefined;
 
 /**
  * @member {Number} july
  */
-BugetPlan.prototype['july'] = undefined;
+BugetPlanView.prototype['july'] = undefined;
 
 /**
  * @member {Number} august
  */
-BugetPlan.prototype['august'] = undefined;
+BugetPlanView.prototype['august'] = undefined;
 
 /**
  * @member {Number} september
  */
-BugetPlan.prototype['september'] = undefined;
+BugetPlanView.prototype['september'] = undefined;
 
 /**
  * @member {Number} october
  */
-BugetPlan.prototype['october'] = undefined;
+BugetPlanView.prototype['october'] = undefined;
 
 /**
  * @member {Number} november
  */
-BugetPlan.prototype['november'] = undefined;
+BugetPlanView.prototype['november'] = undefined;
 
 /**
  * @member {Number} december
  */
-BugetPlan.prototype['december'] = undefined;
-var _default = BugetPlan;
+BugetPlanView.prototype['december'] = undefined;
+var _default = BugetPlanView;
 exports["default"] = _default;
 },{"../ApiClient":12}],24:[function(require,module,exports){
 "use strict";
@@ -16319,18 +16516,18 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 /**
- * The Company model module.
- * @module model/Company
+ * The CompanyView model module.
+ * @module model/CompanyView
  * @version v1
  */
-var Company = /*#__PURE__*/function () {
+var CompanyView = /*#__PURE__*/function () {
   /**
-   * Constructs a new <code>Company</code>.
-   * @alias module:model/Company
+   * Constructs a new <code>CompanyView</code>.
+   * @alias module:model/CompanyView
    */
-  function Company() {
-    _classCallCheck(this, Company);
-    Company.initialize(this);
+  function CompanyView() {
+    _classCallCheck(this, CompanyView);
+    CompanyView.initialize(this);
   }
 
   /**
@@ -16338,30 +16535,24 @@ var Company = /*#__PURE__*/function () {
    * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
    * Only for internal use.
    */
-  _createClass(Company, null, [{
+  _createClass(CompanyView, null, [{
     key: "initialize",
     value: function initialize(obj) {}
 
     /**
-     * Constructs a <code>Company</code> from a plain JavaScript object, optionally creating a new instance.
+     * Constructs a <code>CompanyView</code> from a plain JavaScript object, optionally creating a new instance.
      * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
      * @param {Object} data The plain JavaScript object bearing properties of interest.
-     * @param {module:model/Company} obj Optional instance to populate.
-     * @return {module:model/Company} The populated <code>Company</code> instance.
+     * @param {module:model/CompanyView} obj Optional instance to populate.
+     * @return {module:model/CompanyView} The populated <code>CompanyView</code> instance.
      */
   }, {
     key: "constructFromObject",
     value: function constructFromObject(data, obj) {
       if (data) {
-        obj = obj || new Company();
+        obj = obj || new CompanyView();
         if (data.hasOwnProperty('id')) {
           obj['id'] = _ApiClient["default"].convertToType(data['id'], 'Number');
-        }
-        if (data.hasOwnProperty('createDate')) {
-          obj['createDate'] = _ApiClient["default"].convertToType(data['createDate'], 'Date');
-        }
-        if (data.hasOwnProperty('modifyDate')) {
-          obj['modifyDate'] = _ApiClient["default"].convertToType(data['modifyDate'], 'Date');
         }
         if (data.hasOwnProperty('name')) {
           obj['name'] = _ApiClient["default"].convertToType(data['name'], 'String');
@@ -16371,9 +16562,9 @@ var Company = /*#__PURE__*/function () {
     }
 
     /**
-     * Validates the JSON data with respect to <code>Company</code>.
+     * Validates the JSON data with respect to <code>CompanyView</code>.
      * @param {Object} data The plain JavaScript object bearing properties of interest.
-     * @return {boolean} to indicate whether the JSON data is valid with respect to <code>Company</code>.
+     * @return {boolean} to indicate whether the JSON data is valid with respect to <code>CompanyView</code>.
      */
   }, {
     key: "validateJSON",
@@ -16385,28 +16576,18 @@ var Company = /*#__PURE__*/function () {
       return true;
     }
   }]);
-  return Company;
+  return CompanyView;
 }();
 /**
  * @member {Number} id
  */
-Company.prototype['id'] = undefined;
-
-/**
- * @member {Date} createDate
- */
-Company.prototype['createDate'] = undefined;
-
-/**
- * @member {Date} modifyDate
- */
-Company.prototype['modifyDate'] = undefined;
+CompanyView.prototype['id'] = undefined;
 
 /**
  * @member {String} name
  */
-Company.prototype['name'] = undefined;
-var _default = Company;
+CompanyView.prototype['name'] = undefined;
+var _default = CompanyView;
 exports["default"] = _default;
 },{"../ApiClient":12}],25:[function(require,module,exports){
 "use strict";
@@ -16421,18 +16602,18 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 /**
- * The Department model module.
- * @module model/Department
+ * The DepartmentView model module.
+ * @module model/DepartmentView
  * @version v1
  */
-var Department = /*#__PURE__*/function () {
+var DepartmentView = /*#__PURE__*/function () {
   /**
-   * Constructs a new <code>Department</code>.
-   * @alias module:model/Department
+   * Constructs a new <code>DepartmentView</code>.
+   * @alias module:model/DepartmentView
    */
-  function Department() {
-    _classCallCheck(this, Department);
-    Department.initialize(this);
+  function DepartmentView() {
+    _classCallCheck(this, DepartmentView);
+    DepartmentView.initialize(this);
   }
 
   /**
@@ -16440,30 +16621,24 @@ var Department = /*#__PURE__*/function () {
    * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
    * Only for internal use.
    */
-  _createClass(Department, null, [{
+  _createClass(DepartmentView, null, [{
     key: "initialize",
     value: function initialize(obj) {}
 
     /**
-     * Constructs a <code>Department</code> from a plain JavaScript object, optionally creating a new instance.
+     * Constructs a <code>DepartmentView</code> from a plain JavaScript object, optionally creating a new instance.
      * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
      * @param {Object} data The plain JavaScript object bearing properties of interest.
-     * @param {module:model/Department} obj Optional instance to populate.
-     * @return {module:model/Department} The populated <code>Department</code> instance.
+     * @param {module:model/DepartmentView} obj Optional instance to populate.
+     * @return {module:model/DepartmentView} The populated <code>DepartmentView</code> instance.
      */
   }, {
     key: "constructFromObject",
     value: function constructFromObject(data, obj) {
       if (data) {
-        obj = obj || new Department();
+        obj = obj || new DepartmentView();
         if (data.hasOwnProperty('id')) {
           obj['id'] = _ApiClient["default"].convertToType(data['id'], 'Number');
-        }
-        if (data.hasOwnProperty('createDate')) {
-          obj['createDate'] = _ApiClient["default"].convertToType(data['createDate'], 'Date');
-        }
-        if (data.hasOwnProperty('modifyDate')) {
-          obj['modifyDate'] = _ApiClient["default"].convertToType(data['modifyDate'], 'Date');
         }
         if (data.hasOwnProperty('name')) {
           obj['name'] = _ApiClient["default"].convertToType(data['name'], 'String');
@@ -16476,9 +16651,9 @@ var Department = /*#__PURE__*/function () {
     }
 
     /**
-     * Validates the JSON data with respect to <code>Department</code>.
+     * Validates the JSON data with respect to <code>DepartmentView</code>.
      * @param {Object} data The plain JavaScript object bearing properties of interest.
-     * @return {boolean} to indicate whether the JSON data is valid with respect to <code>Department</code>.
+     * @return {boolean} to indicate whether the JSON data is valid with respect to <code>DepartmentView</code>.
      */
   }, {
     key: "validateJSON",
@@ -16490,33 +16665,23 @@ var Department = /*#__PURE__*/function () {
       return true;
     }
   }]);
-  return Department;
+  return DepartmentView;
 }();
 /**
  * @member {Number} id
  */
-Department.prototype['id'] = undefined;
-
-/**
- * @member {Date} createDate
- */
-Department.prototype['createDate'] = undefined;
-
-/**
- * @member {Date} modifyDate
- */
-Department.prototype['modifyDate'] = undefined;
+DepartmentView.prototype['id'] = undefined;
 
 /**
  * @member {String} name
  */
-Department.prototype['name'] = undefined;
+DepartmentView.prototype['name'] = undefined;
 
 /**
  * @member {Number} budget
  */
-Department.prototype['budget'] = undefined;
-var _default = Department;
+DepartmentView.prototype['budget'] = undefined;
+var _default = DepartmentView;
 exports["default"] = _default;
 },{"../ApiClient":12}],26:[function(require,module,exports){
 "use strict";
@@ -16531,18 +16696,18 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 /**
- * The Employee model module.
- * @module model/Employee
+ * The EmployeeView model module.
+ * @module model/EmployeeView
  * @version v1
  */
-var Employee = /*#__PURE__*/function () {
+var EmployeeView = /*#__PURE__*/function () {
   /**
-   * Constructs a new <code>Employee</code>.
-   * @alias module:model/Employee
+   * Constructs a new <code>EmployeeView</code>.
+   * @alias module:model/EmployeeView
    */
-  function Employee() {
-    _classCallCheck(this, Employee);
-    Employee.initialize(this);
+  function EmployeeView() {
+    _classCallCheck(this, EmployeeView);
+    EmployeeView.initialize(this);
   }
 
   /**
@@ -16550,30 +16715,24 @@ var Employee = /*#__PURE__*/function () {
    * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
    * Only for internal use.
    */
-  _createClass(Employee, null, [{
+  _createClass(EmployeeView, null, [{
     key: "initialize",
     value: function initialize(obj) {}
 
     /**
-     * Constructs a <code>Employee</code> from a plain JavaScript object, optionally creating a new instance.
+     * Constructs a <code>EmployeeView</code> from a plain JavaScript object, optionally creating a new instance.
      * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
      * @param {Object} data The plain JavaScript object bearing properties of interest.
-     * @param {module:model/Employee} obj Optional instance to populate.
-     * @return {module:model/Employee} The populated <code>Employee</code> instance.
+     * @param {module:model/EmployeeView} obj Optional instance to populate.
+     * @return {module:model/EmployeeView} The populated <code>EmployeeView</code> instance.
      */
   }, {
     key: "constructFromObject",
     value: function constructFromObject(data, obj) {
       if (data) {
-        obj = obj || new Employee();
+        obj = obj || new EmployeeView();
         if (data.hasOwnProperty('id')) {
           obj['id'] = _ApiClient["default"].convertToType(data['id'], 'Number');
-        }
-        if (data.hasOwnProperty('createDate')) {
-          obj['createDate'] = _ApiClient["default"].convertToType(data['createDate'], 'Date');
-        }
-        if (data.hasOwnProperty('modifyDate')) {
-          obj['modifyDate'] = _ApiClient["default"].convertToType(data['modifyDate'], 'Date');
         }
         if (data.hasOwnProperty('name')) {
           obj['name'] = _ApiClient["default"].convertToType(data['name'], 'String');
@@ -16583,9 +16742,9 @@ var Employee = /*#__PURE__*/function () {
     }
 
     /**
-     * Validates the JSON data with respect to <code>Employee</code>.
+     * Validates the JSON data with respect to <code>EmployeeView</code>.
      * @param {Object} data The plain JavaScript object bearing properties of interest.
-     * @return {boolean} to indicate whether the JSON data is valid with respect to <code>Employee</code>.
+     * @return {boolean} to indicate whether the JSON data is valid with respect to <code>EmployeeView</code>.
      */
   }, {
     key: "validateJSON",
@@ -16597,28 +16756,18 @@ var Employee = /*#__PURE__*/function () {
       return true;
     }
   }]);
-  return Employee;
+  return EmployeeView;
 }();
 /**
  * @member {Number} id
  */
-Employee.prototype['id'] = undefined;
-
-/**
- * @member {Date} createDate
- */
-Employee.prototype['createDate'] = undefined;
-
-/**
- * @member {Date} modifyDate
- */
-Employee.prototype['modifyDate'] = undefined;
+EmployeeView.prototype['id'] = undefined;
 
 /**
  * @member {String} name
  */
-Employee.prototype['name'] = undefined;
-var _default = Employee;
+EmployeeView.prototype['name'] = undefined;
+var _default = EmployeeView;
 exports["default"] = _default;
 },{"../ApiClient":12}],27:[function(require,module,exports){
 "use strict";
@@ -16633,18 +16782,18 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 /**
- * The Expense model module.
- * @module model/Expense
+ * The ExpenseTypeView model module.
+ * @module model/ExpenseTypeView
  * @version v1
  */
-var Expense = /*#__PURE__*/function () {
+var ExpenseTypeView = /*#__PURE__*/function () {
   /**
-   * Constructs a new <code>Expense</code>.
-   * @alias module:model/Expense
+   * Constructs a new <code>ExpenseTypeView</code>.
+   * @alias module:model/ExpenseTypeView
    */
-  function Expense() {
-    _classCallCheck(this, Expense);
-    Expense.initialize(this);
+  function ExpenseTypeView() {
+    _classCallCheck(this, ExpenseTypeView);
+    ExpenseTypeView.initialize(this);
   }
 
   /**
@@ -16652,30 +16801,130 @@ var Expense = /*#__PURE__*/function () {
    * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
    * Only for internal use.
    */
-  _createClass(Expense, null, [{
+  _createClass(ExpenseTypeView, null, [{
     key: "initialize",
     value: function initialize(obj) {}
 
     /**
-     * Constructs a <code>Expense</code> from a plain JavaScript object, optionally creating a new instance.
+     * Constructs a <code>ExpenseTypeView</code> from a plain JavaScript object, optionally creating a new instance.
      * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
      * @param {Object} data The plain JavaScript object bearing properties of interest.
-     * @param {module:model/Expense} obj Optional instance to populate.
-     * @return {module:model/Expense} The populated <code>Expense</code> instance.
+     * @param {module:model/ExpenseTypeView} obj Optional instance to populate.
+     * @return {module:model/ExpenseTypeView} The populated <code>ExpenseTypeView</code> instance.
      */
   }, {
     key: "constructFromObject",
     value: function constructFromObject(data, obj) {
       if (data) {
-        obj = obj || new Expense();
+        obj = obj || new ExpenseTypeView();
         if (data.hasOwnProperty('id')) {
           obj['id'] = _ApiClient["default"].convertToType(data['id'], 'Number');
         }
-        if (data.hasOwnProperty('createDate')) {
-          obj['createDate'] = _ApiClient["default"].convertToType(data['createDate'], 'Date');
+        if (data.hasOwnProperty('name')) {
+          obj['name'] = _ApiClient["default"].convertToType(data['name'], 'String');
         }
-        if (data.hasOwnProperty('modifyDate')) {
-          obj['modifyDate'] = _ApiClient["default"].convertToType(data['modifyDate'], 'Date');
+        if (data.hasOwnProperty('description')) {
+          obj['description'] = _ApiClient["default"].convertToType(data['description'], 'String');
+        }
+        if (data.hasOwnProperty('limit')) {
+          obj['limit'] = _ApiClient["default"].convertToType(data['limit'], 'Number');
+        }
+      }
+      return obj;
+    }
+
+    /**
+     * Validates the JSON data with respect to <code>ExpenseTypeView</code>.
+     * @param {Object} data The plain JavaScript object bearing properties of interest.
+     * @return {boolean} to indicate whether the JSON data is valid with respect to <code>ExpenseTypeView</code>.
+     */
+  }, {
+    key: "validateJSON",
+    value: function validateJSON(data) {
+      // ensure the json data is a string
+      if (data['name'] && !(typeof data['name'] === 'string' || data['name'] instanceof String)) {
+        throw new Error("Expected the field `name` to be a primitive type in the JSON string but got " + data['name']);
+      }
+      // ensure the json data is a string
+      if (data['description'] && !(typeof data['description'] === 'string' || data['description'] instanceof String)) {
+        throw new Error("Expected the field `description` to be a primitive type in the JSON string but got " + data['description']);
+      }
+      return true;
+    }
+  }]);
+  return ExpenseTypeView;
+}();
+/**
+ * @member {Number} id
+ */
+ExpenseTypeView.prototype['id'] = undefined;
+
+/**
+ * @member {String} name
+ */
+ExpenseTypeView.prototype['name'] = undefined;
+
+/**
+ * @member {String} description
+ */
+ExpenseTypeView.prototype['description'] = undefined;
+
+/**
+ * @member {Number} limit
+ */
+ExpenseTypeView.prototype['limit'] = undefined;
+var _default = ExpenseTypeView;
+exports["default"] = _default;
+},{"../ApiClient":12}],28:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+var _ApiClient = _interopRequireDefault(require("../ApiClient"));
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+/**
+ * The ExpenseView model module.
+ * @module model/ExpenseView
+ * @version v1
+ */
+var ExpenseView = /*#__PURE__*/function () {
+  /**
+   * Constructs a new <code>ExpenseView</code>.
+   * @alias module:model/ExpenseView
+   */
+  function ExpenseView() {
+    _classCallCheck(this, ExpenseView);
+    ExpenseView.initialize(this);
+  }
+
+  /**
+   * Initializes the fields of this object.
+   * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
+   * Only for internal use.
+   */
+  _createClass(ExpenseView, null, [{
+    key: "initialize",
+    value: function initialize(obj) {}
+
+    /**
+     * Constructs a <code>ExpenseView</code> from a plain JavaScript object, optionally creating a new instance.
+     * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
+     * @param {Object} data The plain JavaScript object bearing properties of interest.
+     * @param {module:model/ExpenseView} obj Optional instance to populate.
+     * @return {module:model/ExpenseView} The populated <code>ExpenseView</code> instance.
+     */
+  }, {
+    key: "constructFromObject",
+    value: function constructFromObject(data, obj) {
+      if (data) {
+        obj = obj || new ExpenseView();
+        if (data.hasOwnProperty('id')) {
+          obj['id'] = _ApiClient["default"].convertToType(data['id'], 'Number');
         }
         if (data.hasOwnProperty('confirm')) {
           obj['confirm'] = _ApiClient["default"].convertToType(data['confirm'], 'Boolean');
@@ -16694,9 +16943,9 @@ var Expense = /*#__PURE__*/function () {
     }
 
     /**
-     * Validates the JSON data with respect to <code>Expense</code>.
+     * Validates the JSON data with respect to <code>ExpenseView</code>.
      * @param {Object} data The plain JavaScript object bearing properties of interest.
-     * @return {boolean} to indicate whether the JSON data is valid with respect to <code>Expense</code>.
+     * @return {boolean} to indicate whether the JSON data is valid with respect to <code>ExpenseView</code>.
      */
   }, {
     key: "validateJSON",
@@ -16704,165 +16953,33 @@ var Expense = /*#__PURE__*/function () {
       return true;
     }
   }]);
-  return Expense;
+  return ExpenseView;
 }();
 /**
  * @member {Number} id
  */
-Expense.prototype['id'] = undefined;
-
-/**
- * @member {Date} createDate
- */
-Expense.prototype['createDate'] = undefined;
-
-/**
- * @member {Date} modifyDate
- */
-Expense.prototype['modifyDate'] = undefined;
+ExpenseView.prototype['id'] = undefined;
 
 /**
  * @member {Boolean} confirm
  */
-Expense.prototype['confirm'] = undefined;
+ExpenseView.prototype['confirm'] = undefined;
 
 /**
  * @member {Boolean} valid
  */
-Expense.prototype['valid'] = undefined;
+ExpenseView.prototype['valid'] = undefined;
 
 /**
  * @member {Date} date
  */
-Expense.prototype['date'] = undefined;
+ExpenseView.prototype['date'] = undefined;
 
 /**
  * @member {Number} amount
  */
-Expense.prototype['amount'] = undefined;
-var _default = Expense;
-exports["default"] = _default;
-},{"../ApiClient":12}],28:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports["default"] = void 0;
-var _ApiClient = _interopRequireDefault(require("../ApiClient"));
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-/**
- * The ExpenseType model module.
- * @module model/ExpenseType
- * @version v1
- */
-var ExpenseType = /*#__PURE__*/function () {
-  /**
-   * Constructs a new <code>ExpenseType</code>.
-   * @alias module:model/ExpenseType
-   */
-  function ExpenseType() {
-    _classCallCheck(this, ExpenseType);
-    ExpenseType.initialize(this);
-  }
-
-  /**
-   * Initializes the fields of this object.
-   * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
-   * Only for internal use.
-   */
-  _createClass(ExpenseType, null, [{
-    key: "initialize",
-    value: function initialize(obj) {}
-
-    /**
-     * Constructs a <code>ExpenseType</code> from a plain JavaScript object, optionally creating a new instance.
-     * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
-     * @param {Object} data The plain JavaScript object bearing properties of interest.
-     * @param {module:model/ExpenseType} obj Optional instance to populate.
-     * @return {module:model/ExpenseType} The populated <code>ExpenseType</code> instance.
-     */
-  }, {
-    key: "constructFromObject",
-    value: function constructFromObject(data, obj) {
-      if (data) {
-        obj = obj || new ExpenseType();
-        if (data.hasOwnProperty('id')) {
-          obj['id'] = _ApiClient["default"].convertToType(data['id'], 'Number');
-        }
-        if (data.hasOwnProperty('createDate')) {
-          obj['createDate'] = _ApiClient["default"].convertToType(data['createDate'], 'Date');
-        }
-        if (data.hasOwnProperty('modifyDate')) {
-          obj['modifyDate'] = _ApiClient["default"].convertToType(data['modifyDate'], 'Date');
-        }
-        if (data.hasOwnProperty('name')) {
-          obj['name'] = _ApiClient["default"].convertToType(data['name'], 'String');
-        }
-        if (data.hasOwnProperty('description')) {
-          obj['description'] = _ApiClient["default"].convertToType(data['description'], 'String');
-        }
-        if (data.hasOwnProperty('limit')) {
-          obj['limit'] = _ApiClient["default"].convertToType(data['limit'], 'Number');
-        }
-      }
-      return obj;
-    }
-
-    /**
-     * Validates the JSON data with respect to <code>ExpenseType</code>.
-     * @param {Object} data The plain JavaScript object bearing properties of interest.
-     * @return {boolean} to indicate whether the JSON data is valid with respect to <code>ExpenseType</code>.
-     */
-  }, {
-    key: "validateJSON",
-    value: function validateJSON(data) {
-      // ensure the json data is a string
-      if (data['name'] && !(typeof data['name'] === 'string' || data['name'] instanceof String)) {
-        throw new Error("Expected the field `name` to be a primitive type in the JSON string but got " + data['name']);
-      }
-      // ensure the json data is a string
-      if (data['description'] && !(typeof data['description'] === 'string' || data['description'] instanceof String)) {
-        throw new Error("Expected the field `description` to be a primitive type in the JSON string but got " + data['description']);
-      }
-      return true;
-    }
-  }]);
-  return ExpenseType;
-}();
-/**
- * @member {Number} id
- */
-ExpenseType.prototype['id'] = undefined;
-
-/**
- * @member {Date} createDate
- */
-ExpenseType.prototype['createDate'] = undefined;
-
-/**
- * @member {Date} modifyDate
- */
-ExpenseType.prototype['modifyDate'] = undefined;
-
-/**
- * @member {String} name
- */
-ExpenseType.prototype['name'] = undefined;
-
-/**
- * @member {String} description
- */
-ExpenseType.prototype['description'] = undefined;
-
-/**
- * @member {Number} limit
- */
-ExpenseType.prototype['limit'] = undefined;
-var _default = ExpenseType;
+ExpenseView.prototype['amount'] = undefined;
+var _default = ExpenseView;
 exports["default"] = _default;
 },{"../ApiClient":12}],29:[function(require,module,exports){
 "use strict";

@@ -7,7 +7,6 @@
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" href="/public/css/layout.css">
   <script src="https://kit.fontawesome.com/e85747e3bb.js"></script>
-  <script src="/public/js/bundle.js"></script>
 </head>
 
 <body>
@@ -161,7 +160,7 @@
                           <input type="number" class="form-control bg-dark text-white" id="formCreateDepartmentBuget"
                             aria-describedby="emailHelp" placeholder="Enter buget" value="0" required>
                         </div>
-                        <button type="submit" class="btn btn-primary">Create department</button>
+                        <button id="btn-c-department" type="button" class="btn btn-primary">Create department</button>
                       </form>
                     </div>
                   </div>
@@ -206,15 +205,11 @@
                         <form id="formDeleteDepartment" class="needs-validation" novalidate>
                           <div class="form-group">
                             <label for="formDeleteDepartmentSelect" class="text-white">Department</label>
-                            <select class="form-control bg-dark text-white" id="formDeleteDepartmentSelect">
-                              <option>department1</option>
-                              <option>department2</option>
-                              <option>department3</option>
-                              <option>department4</option>
-                              <option>department5</option>
+                            <select class="form-control bg-dark text-white select-department"
+                              id="formDeleteDepartmentSelect">
                             </select>
                           </div>
-                          <button type="submit" class="btn btn-primary">Delet Department</button>
+                          <button id="btn-d-department" type="button" class="btn btn-primary">Delet Department</button>
                         </form>
                       </div>
                     </div>
@@ -332,7 +327,7 @@
                         id="month">
                     </div>
                   </div>
-                  <button type="submit" class="btn btn-primary">Save Change</button>
+                  <button id="btn-u-bugetPlan" type="button" class="btn btn-primary">Save Change</button>
                 </form>
               </div>
             </div>
@@ -393,15 +388,10 @@
                   </div>
                   <div class="form-group">
                     <label for="inputDepartmentName" class="text-white">Department</label>
-                    <select class="form-control bg-dark text-white" id="inputDepartmentName">
-                      <option>department1</option>
-                      <option>department2</option>
-                      <option>department3</option>
-                      <option>department4</option>
-                      <option>department5</option>
+                    <select class="form-control bg-dark text-white select-department" id="inputDepartmentName">
                     </select>
                   </div>
-                  <button type="submit" class="btn btn-primary">Create employee</button>
+                  <button id="btn-c-employee" type="button" class="btn btn-primary">Create employee</button>
                 </form>
               </div>
               <div class="col rounded bg-dark p-4 mr-3">
@@ -409,7 +399,7 @@
                 <form id="formCreateExpense" class="needs-validation" novalidate>
                   <div class="form-group">
                     <label for="formCreateExpenseEmployee" class="text-white">Employee</label>
-                    <select class="form-control bg-dark text-white" id="formCreateExpenseEmployee">
+                    <select class="form-control bg-dark text-white select-employee" id="formCreateExpenseEmployee">
                       <option>employee1</option>
                       <option>employee2</option>
                       <option>employee3</option>
@@ -419,19 +409,15 @@
                   </div>
                   <div class="form-group">
                     <label for="formCreateExpenseExpenseType" class="text-white">Expense type</label>
-                    <select class="form-control bg-dark text-white" id="formCreateExpenseExpenseType">
-                      <option>expenseType1</option>
-                      <option>expenseType2</option>
-                      <option>expenseType3</option>
-                      <option>expenseType4</option>
-                      <option>expenseType5</option>
+                    <select class="form-control bg-dark text-white select-expenseType"
+                      id="formCreateExpenseExpenseType">
                     </select>
                   </div>
                   <div class="form-group">
                     <label for="expenseType" class="text-white">Amount</label>
                     <input class="form-control rounded bg-dark text-white" type="number">
                   </div>
-                  <button type="submit" class="btn btn-primary">Create expense</button>
+                  <button id="btn-c-expense" type="button" class="btn btn-primary">Create expense</button>
                 </form>
               </div>
               <div class="col rounded bg-dark p-4">
@@ -439,15 +425,11 @@
                 <form id="formDeleteEmployee" class="needs-validation" novalidate>
                   <div class="form-group">
                     <label for="formDeleteEmployeeEmployee" class="text-white">Employee</label>
-                    <select class="form-control bg-dark text-white" id="formDeleteEmployeeEmployee">
-                      <option>employee1</option>
-                      <option>employee2</option>
-                      <option>employee3</option>
-                      <option>employee4</option>
-                      <option>employee5</option>
+                    <select class="form-control bg-dark text-white select select-employee"
+                      id="formDeleteEmployeeEmployee">
                     </select>
                   </div>
-                  <button type="submit" class="btn btn-primary">Delet employee</button>
+                  <button id="btn-d-employee" type="button" class="btn btn-primary">Delet employee</button>
                 </form>
               </div>
             </div>
@@ -523,7 +505,7 @@
                     <input id="formCreateExpenseTypeLimit" class="form-control rounded bg-dark text-white"
                       type="number">
                   </div>
-                  <button type="submit" class="btn btn-primary">Create Expense type</button>
+                  <button id="btn-c-expenseType" type="button" class="btn btn-primary">Create Expense type</button>
                 </form>
               </div>
               <div class="col rounded bg-dark p-4 mr-3">
@@ -531,15 +513,10 @@
                 <form id="formDeleteExpenseType" class="needs-validation" novalidate>
                   <div class="form-group">
                     <label for="inputDepartmentName" class="text-white">Expense type</label>
-                    <select class="form-control bg-dark text-white" id="formDeleteExpenseTypeName">
-                      <option>expenseType1</option>
-                      <option>expenseType2</option>
-                      <option>expenseType3</option>
-                      <option>expenseType4</option>
-                      <option>expenseType5</option>
+                    <select class="form-control bg-dark text-white select-expenseType" id="formDeleteExpense">
                     </select>
                   </div>
-                  <button type="submit" class="btn btn-primary">Delete expense type</button>
+                  <button id="btn-d-expenseType" type="button" class="btn btn-primary">Delete expense type</button>
                 </form>
               </div>
             </div>
@@ -604,11 +581,11 @@
             </div>
             <div class="row h-25 pb-3">
               <div class="col rounded bg-dark p-4 mr-3">
-                <!--ExpenseType Delete form-->
+                <!--Expense Delete form-->
                 <form id="formDeleteExpense" class="needs-validation" novalidate>
                   <div class="form-group">
                     <label for="inputDepartmentName" class="text-white">Expense type</label>
-                    <select class="form-control bg-dark text-white" id="formDeleteExpenseName">
+                    <select class="form-control bg-dark text-white select-expense" id="formDeleteExpenseName">
                       <option>expense1</option>
                       <option>expense2</option>
                       <option>expense3</option>
@@ -616,7 +593,7 @@
                       <option>expense5</option>
                     </select>
                   </div>
-                  <button type="submit" class="btn btn-primary">Delete expense</button>
+                  <button id="btn-d-expense" type="button" class="btn btn-primary">Delete expense</button>
                 </form>
               </div>
             </div>
@@ -629,7 +606,7 @@
   <footer>
     <span>footer</span>
   </footer>
-
+  <script src="/public/js/bundle.js"></script>
   <script src="/public/js/LibBundle.js"></script>
   <script src="/public/js/charts.js"></script>
   <script src="/public/js/validation.js"></script>
