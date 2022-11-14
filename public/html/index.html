@@ -47,47 +47,10 @@
                     <tr>
                       <th scope="col">#</th>
                       <th scope="col">First</th>
-                      <th scope="col">Last</th>
-                      <th scope="col">Handle</th>
+                      <th scope="col">First</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>Mark</td>
-                      <td>Otto</td>
-                      <td>@mdo</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">2</th>
-                      <td>Jacob</td>
-                      <td>Thornton</td>
-                      <td>@fat</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">3</th>
-                      <td>Larry</td>
-                      <td>the Bird</td>
-                      <td>@twitter</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>Mark</td>
-                      <td>Otto</td>
-                      <td>@mdo</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>Mark</td>
-                      <td>Otto</td>
-                      <td>@mdo</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>Mark</td>
-                      <td>Otto</td>
-                      <td>@mdo</td>
-                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -108,35 +71,10 @@
                     <tr>
                       <th scope="col">#</th>
                       <th scope="col">Name</th>
-                      <th scope="col">Buget</th>
+                      <th scope="col">Budget</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>Mark</td>
-                      <td>100</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">2</th>
-                      <td>Jacob</td>
-                      <td>2222</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">3</th>
-                      <td>Larry</td>
-                      <td>333</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">3</th>
-                      <td>Larry</td>
-                      <td>333</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">3</th>
-                      <td>Larry</td>
-                      <td>333</td>
-                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -347,30 +285,6 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>Mark</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">2</th>
-                      <td>Jacob</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">3</th>
-                      <td>Larry</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>Mark</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>Mark</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>Mark</td>
-                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -386,12 +300,23 @@
                       aria-describedby="emailHelp" placeholder="Enter name" required>
                     <small id="emailHelp" class="form-text text-muted">Unique name</small>
                   </div>
+                  <button id="btn-c-employee" type="button" class="btn btn-primary">Create employee</button>
+                </form>
+              </div>
+              <div class="col rounded bg-dark p-4 mr-3">
+                <!--employee add department form-->
+                <form id="formCreateEmployee" class="needs-validation" novalidate>
                   <div class="form-group">
-                    <label for="inputDepartmentName" class="text-white">Department</label>
-                    <select class="form-control bg-dark text-white select-department" id="inputDepartmentName">
+                    <label for="inputDepartmentName" class="text-white">Employee</label>
+                    <select class="form-control bg-dark text-white select-employee" id="employeAddedToDepartment">
                     </select>
                   </div>
-                  <button id="btn-c-employee" type="button" class="btn btn-primary">Create employee</button>
+                  <div class="form-group">
+                    <label for="inputDepartmentName" class="text-white">Department</label>
+                    <select class="form-control bg-dark text-white select-department" id="departmentForAddedEmployee">
+                    </select>
+                  </div>
+                  <button id="btn-u-addEmployee" type="button" class="btn btn-primary">Add employee</button>
                 </form>
               </div>
               <div class="col rounded bg-dark p-4 mr-3">
@@ -400,22 +325,17 @@
                   <div class="form-group">
                     <label for="formCreateExpenseEmployee" class="text-white">Employee</label>
                     <select class="form-control bg-dark text-white select-employee" id="formCreateExpenseEmployee">
-                      <option>employee1</option>
-                      <option>employee2</option>
-                      <option>employee3</option>
-                      <option>employee4</option>
-                      <option>employee5</option>
                     </select>
                   </div>
                   <div class="form-group">
-                    <label for="formCreateExpenseExpenseType" class="text-white">Expense type</label>
+                    <label for="formCreateExpenseExpenseType" class="text-white" id="form">Expense type</label>
                     <select class="form-control bg-dark text-white select-expenseType"
                       id="formCreateExpenseExpenseType">
                     </select>
                   </div>
                   <div class="form-group">
                     <label for="expenseType" class="text-white">Amount</label>
-                    <input class="form-control rounded bg-dark text-white" type="number">
+                    <input id="formCreateExpenseAmount" class="form-control rounded bg-dark text-white" type="number">
                   </div>
                   <button id="btn-c-expense" type="button" class="btn btn-primary">Create expense</button>
                 </form>
@@ -447,39 +367,10 @@
                       <th scope="col">#</th>
                       <th scope="col">Name</th>
                       <th scope="col">Limit</th>
+                      <td scope="col">Description</td>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>Mark</td>
-                      <td>Mark</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">2</th>
-                      <td>Jacob</td>
-                      <td>Mark</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">3</th>
-                      <td>Larry</td>
-                      <td>Mark</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>Mark</td>
-                      <td>Mark</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>Mark</td>
-                      <td>Mark</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>Mark</td>
-                      <td>Mark</td>
-                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -528,69 +419,39 @@
             <div class="row h-25 pb-3">
               <div class="col table-wrapper bg-info rounded p-0 bg-dark">
                 <!--expense table-->
-                <table id="expenseTable" class="table table-dark p-0 m-0">
+                <table id="tableExpense" class="table table-dark p-0 m-0">
                   <thead>
                     <tr>
                       <th scope="col">#</th>
-                      <th scope="col">Name</th>
-                      <th scope="col">Amount</th>
+                      <th scope="col">amount</th>
+                      <th scope="col">date</th>
                       <th scope="col">Type</th>
+                      <th scope="col">employee</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>Mark</td>
-                      <td>Mark</td>
-                      <td>Mark</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">2</th>
-                      <td>Jacob</td>
-                      <td>Mark</td>
-                      <td>Mark</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">3</th>
-                      <td>Larry</td>
-                      <td>Mark</td>
-                      <td>Mark</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>Mark</td>
-                      <td>Mark</td>
-                      <td>Mark</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>Mark</td>
-                      <td>Mark</td>
-                      <td>Mark</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>Mark</td>
-                      <td>Mark</td>
-                      <td>Mark</td>
-                    </tr>
                   </tbody>
                 </table>
               </div>
               <div class="w-100"></div>
             </div>
             <div class="row h-25 pb-3">
-              <div class="col rounded bg-dark p-4 mr-3">
-                <!--Expense Delete form-->
-                <form id="formDeleteExpense" class="needs-validation" novalidate>
+              <div class="col rounded bg-dark p-4">
+                <!--Expense find form-->
+                <form id="formFindExpense" class="needs-validation" novalidate>
+                  <div class="form-group">
+                    <label for="inputDepartmentName" class="text-white">Deparement</label>
+                    <select class="form-control bg-dark text-white select-department" id="formFindDeparetment">
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputDepartmentName" class="text-white">Employee</label>
+                    <select class="form-control bg-dark text-white select-employee" id="formFindEmployee">
+                    </select>
+                  </div>
                   <div class="form-group">
                     <label for="inputDepartmentName" class="text-white">Expense type</label>
-                    <select class="form-control bg-dark text-white select-expense" id="formDeleteExpenseName">
-                      <option>expense1</option>
-                      <option>expense2</option>
-                      <option>expense3</option>
-                      <option>expense4</option>
-                      <option>expense5</option>
+                    <select class="form-control bg-dark text-white select-expenseType" id="formFindExpenseType">
                     </select>
                   </div>
                   <button id="btn-d-expense" type="button" class="btn btn-primary">Delete expense</button>
