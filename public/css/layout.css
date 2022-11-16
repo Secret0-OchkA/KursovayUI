@@ -12,6 +12,10 @@ html {
   width: 5px;
 }
 
+.chart {
+  max-height: 300px;
+}
+
 nav a {
   max-height: 32px;
   padding-left: 0;

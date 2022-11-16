@@ -1,5 +1,6 @@
 var MyApiV1 = require("my_api_v1");
 var $ = require("jquery");
+const { Chart } = require("chart.js");
 
 var companyId = 1;
 
@@ -15,6 +16,23 @@ let expEmployeeApi = new MyApiV1.ExpenseFromEmployeeApi(ApiClient);
 let expenseTypeApi = new MyApiV1.ExpenseTypeApi(ApiClient);
 let expDepartmentApi = new MyApiV1.ExpenseFromDepartmentApi(ApiClient);
 let bugetPlanApi = new MyApiV1.BugetPlanApi(ApiClient);
+
+let departmentBudgetChart = new Chart(document.getElementById('chartDepartmentBudget'), {
+  type: 'pie',
+  data: {}
+});
+let departmentPeopleChart = new Chart(document.getElementById('chartDepartmentPeople'), {
+  type: 'bar',
+  data: {},
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  },
+});
+
 
 $(document).ready(function () {
   UpdateDepartment();
@@ -103,6 +121,7 @@ $(document).ready(function () {
                 $("#variableCountExpense").text(data.length);
                 let table = $("#tableExpense > tbody");
                 table.empty();
+                let sumExpenseMoney = 0;
                 for (let i = 0; i < data.length; i++) {
                   table.append(`<tr>
                     <td style="display:none;">${data[i].id}</td>
@@ -114,6 +133,8 @@ $(document).ready(function () {
                     <td>${employees.find(emp => emp.id == data[i].employeeId).name}</td>
                     <td><button id='btn${i}-d-expense' class='btn btn-primary d-expense' type='button'>delete</button></td>
                   </tr>`);
+
+                  sumExpenseMoney += data[i].amount;
 
                   $(`#btn${i}-d-expense`).click(function () {
                     $("this").closest("tr").find("td:first").text("test");
@@ -127,6 +148,7 @@ $(document).ready(function () {
                     });
                   });
                 }
+                $("#variableAllExpenseMoney").text(sumExpenseMoney);
               }
             });
           }
@@ -248,10 +270,13 @@ $(document).ready(function () {
         console.log(JSON.stringify(data));
 
         departments = data;
+        DepartmentCharts(departments);
 
         let selectors = $(".select-department");
         let table = $("#tableDepartment > tbody");
         selectors.empty();
+        table.empty();
+        let sumDepartmentBudget = 0;
         for (let i = 0; i < data.length; i++) {
           selectors.append(`<option value="${data[i].id}">${data[i].name}</option>`);
           table.append(`<tr>
@@ -260,7 +285,10 @@ $(document).ready(function () {
           <td>${data[i].name}</td>
           <td>${data[i].budget}</td>
         </tr>`);
+
+          sumDepartmentBudget += data[i].budget;
         }
+        $("#variableCompanyBidget").text(sumDepartmentBudget);
       }
     });
   }
@@ -270,7 +298,7 @@ $(document).ready(function () {
     let department = new MyApiV1.DepartmentView();
     department.id = 0;
     department.name = $('#formCreateDepartmentName').val();
-    department.buget = $('#formCreateDepartmentBuget').val();;
+    department.budget = $('#formCreateDepartmentBuget').val();;
 
     let opts = {
       'departmentView': department // DepartmentView | 
@@ -381,3 +409,54 @@ $(document).ready(function () {
     });
   });
 });
+
+function getRandomColor() {
+  let letters = '0123456789ABCDEF';
+  let color = '#';
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
+function DepartmentCharts(departments) {
+  let labels = [];
+  let budgets = [];
+  let people = [];
+  let bg = [];
+  for (let i = 0; i < departments.length; ++i) {
+    labels.push(departments[i].name);
+    budgets.push(departments[i].budget);
+
+    empDepartmentApi.getEmployeesInDepartment(companyId, departments[i].id, (error, data, response) => {
+      people.push(data.length);
+    });
+
+    bg.push(getRandomColor());
+  }
+
+  departmentPeopleChart.data = {
+    labels: labels,
+    datasets: [{
+      label: 'departments people',
+      data: people,
+      backgroundColor: bg,
+      hoverOffset: 4
+    }]
+  };
+  departmentBudgetChart.data = {
+    labels: labels,
+    datasets: [{
+      label: 'departments budget',
+      data: budgets,
+      backgroundColor: bg,
+      hoverOffset: 4
+    }]
+  };
+
+  departmentPeopleChart.update();
+  departmentPeopleChart.resize();
+  departmentBudgetChart.update();
+  departmentBudgetChart.resize();
+}
+
