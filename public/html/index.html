@@ -108,15 +108,15 @@
                     <div class="row p-0 m-0">
                       <div class="col p-0 mr-3">
                         <div class="bg-dark p-4 mb-3 rounded text-white col">
-                          <span class="h4">Most employees</span>
+                          <span class="h4">Employees count</span>
                           <div class="h2">
-                            <span id="variableMostEmployee">100</span><i class="fa-solid fa-person text-primary"></i>
+                            <span id="variableCountEmployee">9999</span><i class="fa-solid fa-person text-primary"></i>
                           </div>
                         </div>
                         <div class="bg-dark p-4 mb-3 rounded text-white col">
-                          <span class="h4">Most expense</span>
+                          <span class="h4">expense count</span>
                           <div class="h2">
-                            <span id="variableMostExpense">200</span><i
+                            <span id="variableCountExpense">9999</span><i
                               class="fa-solid fa-cart-shopping text-primary"></i>
                           </div>
                         </div>
@@ -125,14 +125,14 @@
                         <div class="bg-dark p-4 mb-3 rounded text-white col">
                           <span class="h4">Most expens money</span>
                           <div class="h2">
-                            <span id="variableMostExpenseMoney">14881488</span><i
+                            <span id="variableMostExpenseMoney">9999</span><i
                               class="fa-solid fa-dollar-sign text-primary"></i>
                           </div>
                         </div>
                         <div class="bg-dark p-4 mb-3 rounded text-white col">
                           <span class="h4">Most have money</span>
                           <div class="h2">
-                            <span id="variableMostMoney">14881488</span><i class="fa-solid fa-wallet text-primary"></i>
+                            <span id="variableMostMoney">9999</span><i class="fa-solid fa-wallet text-primary"></i>
                           </div>
                         </div>
                       </div>
@@ -157,13 +157,19 @@
               <div class="col rounded bg-dark p-4">
                 <!--department change buget plan form-->
                 <form id="FormDepartmentChangeBugetPlan" class="needs-validation" novalidate>
+                  <div class="form-group">
+                    <label for="formUpdateBugetPlan" class="text-white">Department</label>
+                    <select class="form-control bg-dark text-white select-department"
+                      id="selectUpdateBugetPlanDeperatment">
+                    </select>
+                  </div>
                   <div class="form-row pb-3">
                     <div class="col-4">
                       <label class="text-white" for="January">January</label>
                     </div>
                     <div class="col">
                       <input class="form-control rounded bg-dark text-white" type="number" name="January" value="0"
-                        id="month">
+                        id="monthJanuary">
                     </div>
                   </div>
                   <div class="form-row pb-3">
@@ -172,7 +178,7 @@
                     </div>
                     <div class="col">
                       <input class="form-control rounded bg-dark text-white" type="number" name="February" value="0"
-                        id="month">
+                        id="monthFebruary">
                     </div>
                   </div>
                   <div class="form-row pb-3">
@@ -181,7 +187,7 @@
                     </div>
                     <div class="col">
                       <input class="form-control rounded bg-dark text-white" type="number" name="March" value="0"
-                        id="month">
+                        id="monthMarch">
                     </div>
                   </div>
                   <div class="form-row pb-3">
@@ -190,7 +196,7 @@
                     </div>
                     <div class="col">
                       <input class="form-control rounded bg-dark text-white" type="number" name="April" value="0"
-                        id="month">
+                        id="monthApril">
                     </div>
                   </div>
                   <div class="form-row pb-3">
@@ -199,7 +205,7 @@
                     </div>
                     <div class="col">
                       <input class="form-control rounded bg-dark text-white" type="number" name="May" value="0"
-                        id="month">
+                        id="monthMay">
                     </div>
                   </div>
                   <div class="form-row pb-3">
@@ -208,7 +214,7 @@
                     </div>
                     <div class="col">
                       <input class="form-control rounded bg-dark text-white" type="number" name="June" value="0"
-                        id="month">
+                        id="monthJune">
                     </div>
                   </div>
                   <div class="form-row pb-3">
@@ -217,7 +223,7 @@
                     </div>
                     <div class="col">
                       <input class="form-control rounded bg-dark text-white" type="number" name="July" value="0"
-                        id="month">
+                        id="monthJuly">
                     </div>
                   </div>
                   <div class="form-row pb-3">
@@ -226,7 +232,7 @@
                     </div>
                     <div class="col">
                       <input class="form-control rounded bg-dark text-white" type="number" name="August" value="0"
-                        id="month">
+                        id="monthAugust">
                     </div>
                   </div>
                   <div class="form-row pb-3">
@@ -235,7 +241,7 @@
                     </div>
                     <div class="col">
                       <input class="form-control rounded bg-dark text-white" type="number" name="September" value="0"
-                        id="month">
+                        id="monthSeptember">
                     </div>
                   </div>
                   <div class="form-row pb-3">
@@ -244,7 +250,7 @@
                     </div>
                     <div class="col">
                       <input class="form-control rounded bg-dark text-white" type="number" name="October" value="0"
-                        id="month">
+                        id="monthOctober">
                     </div>
                   </div>
                   <div class="form-row pb-3">
@@ -253,7 +259,7 @@
                     </div>
                     <div class="col">
                       <input class="form-control rounded bg-dark text-white" type="number" name="November" value="0"
-                        id="month">
+                        id="monthNovember">
                     </div>
                   </div>
                   <div class="form-row pb-3">
@@ -262,7 +268,7 @@
                     </div>
                     <div class="col">
                       <input class="form-control rounded bg-dark text-white" type="number" name="December" value="0"
-                        id="month">
+                        id="monthDecember">
                     </div>
                   </div>
                   <button id="btn-u-bugetPlan" type="button" class="btn btn-primary">Save Change</button>

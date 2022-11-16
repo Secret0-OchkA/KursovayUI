@@ -2232,6 +2232,7 @@ $(document).ready(function () {
         console.error(error);
       } else {
         console.log(JSON.stringify(data));
+
         let selectors = $(".select-expenseType");
         let table = $("#tableExpenseType > tbody");
         table.empty();
@@ -2239,7 +2240,7 @@ $(document).ready(function () {
         for (let i = 0; i < data.length; i++) {
           selectors.append(`<option value="${data[i].id}">${data[i].name}</option>`);
           table.append(`<tr>
-          <th>${i}</th>
+          <th>${i + 1}</th>
           <td>${data[i].name}</td>
           <td>${data[i].limit}</td>
           <td>${data[i].description}</td>
@@ -2301,13 +2302,14 @@ $(document).ready(function () {
                 console.error(error);
               } else {
                 console.log(JSON.stringify(data));
+                $("#variableCountExpense").text(data.length);
                 let table = $("#tableExpense > tbody");
                 table.empty();
                 for (let i = 0; i < data.length; i++) {
                   table.append(`<tr>
                     <td style="display:none;">${data[i].id}</td>
                     <td style="display:none;">${data[i].employeeId}</td>
-                    <th>${i}</th>
+                    <th>${i + 1}</th>
                     <td>${data[i].amount}</td>
                     <td>${data[i].date.getFullYear()}/${data[i].date.getMonth()}/${data[i].date.getDate()}</td>
                     <td>${expenseTypes.find(expType => expType.id == data[i].expenseTypeId).name}</td>
@@ -2334,8 +2336,6 @@ $(document).ready(function () {
       }
     });
   }
-
-
   //Create
   $("#btn-c-expense").click(function () {
     let employeeId = $("#formCreateExpenseEmployee").val(); // Number | 
@@ -2388,6 +2388,9 @@ $(document).ready(function () {
         console.error(error);
       } else {
         console.log(JSON.stringify(data));
+
+        $("#variableCountEmployee").text(data.length);
+
         let selectors = $(".select-employee");
         let table = $("#tableEmployee > tbody");
         table.empty();
@@ -2395,7 +2398,7 @@ $(document).ready(function () {
         for (let i = 0; i < data.length; i++) {
           selectors.append(`<option value="${data[i].id}">${data[i].name}</option>`);
           table.append(`<tr>
-          <th>${i}</th>
+          <th>${i + 1}</th>
           <td>${data[i].name}</td>
         </tr>`);
         }
@@ -2454,7 +2457,8 @@ $(document).ready(function () {
         for (let i = 0; i < data.length; i++) {
           selectors.append(`<option value="${data[i].id}">${data[i].name}</option>`);
           table.append(`<tr>
-          <th>${i}</th>
+          <td style="display:none;">${data[i].id}</td>
+          <th>${i + 1}</th>
           <td>${data[i].name}</td>
           <td>${data[i].budget}</td>
         </tr>`);
@@ -2512,16 +2516,74 @@ $(document).ready(function () {
 
   //TODO: BugetPlan=================================
   //Get
-
-  //Create
-
-  //Delete
-
-  //SetMonthBuget
+  $("#selectUpdateBugetPlanDeperatment").change(function () {
+    console.log("click");
+    let departmnetId = $("#selectUpdateBugetPlanDeperatment").val();
 
 
+    bugetPlanApi.getBugetPlan(companyId, departmnetId, (error, data, response) => {
+      if (error) {
+        console.error(error);
+      } else {
+        console.log(JSON.stringify(data));
+        let bugetPlanInst = data;
 
+        $("#monthJanuary").val(bugetPlanInst.january);
+        $("#monthFebruary").val(bugetPlanInst.february);
+        $("#monthMarch").val(bugetPlanInst.march);
+        $("#monthApril").val(bugetPlanInst.april);
+        $("#monthMay").val(bugetPlanInst.may);
+        $("#monthJune").val(bugetPlanInst.june);
+        $("#monthJuly").val(bugetPlanInst.july);
+        $("#monthAugust").val(bugetPlanInst.august);
+        $("#monthSeptember").val(bugetPlanInst.september);
+        $("#monthOctober").val(bugetPlanInst.october);
+        $("#monthNovember").val(bugetPlanInst.november);
+        $("#monthDecember").val(bugetPlanInst.december);
+      }
+    });
+  });
+
+  //UpdateBugetPlan
+  $("#btn-u-bugetPlan").click(function () {
+
+    let departmnetId = $("#selectUpdateBugetPlanDeperatment").val();
+
+    bugetPlanApi.getBugetPlan(companyId, departmnetId, (error, bugetPlan, response) => {
+      if (error) {
+        console.error(error);
+      } else {
+
+        let bugetPlanInst = new MyApiV1.BugetPlanView();
+
+        bugetPlanInst.january = $("#monthJanuary").val();
+        bugetPlanInst.february = $("#monthFebruary").val();
+        bugetPlanInst.march = $("#monthMarch").val();
+        bugetPlanInst.april = $("#monthApril").val();
+        bugetPlanInst.may = $("#monthMay").val();
+        bugetPlanInst.june = $("#monthJune").val();
+        bugetPlanInst.july = $("#monthJuly").val();
+        bugetPlanInst.august = $("#monthAugust").val();
+        bugetPlanInst.september = $("#monthSeptember").val();
+        bugetPlanInst.october = $("#monthOctober").val();
+        bugetPlanInst.november = $("#monthNovember").val();
+        bugetPlanInst.december = $("#monthDecember").val();
+
+        let opts = {
+          'bugetPlanView': bugetPlanInst // BugetPlanView | 
+        };
+        bugetPlanApi.updateBugetPlan(companyId, departmnetId, bugetPlan.id, opts, (error, data, response) => {
+          if (error) {
+            console.error(error);
+          } else {
+            console.log(JSON.stringify(data));
+          }
+        });
+      }
+    });
+  });
 });
+
 },{"jquery":11,"my_api_v1":22}],9:[function(require,module,exports){
 
 /**
@@ -14658,16 +14720,15 @@ var BugetPlanApi = /*#__PURE__*/function () {
      */
 
     /**
-     * get buget plan
+     * get buget plan by department
      * @param {Number} companyId 
      * @param {Number} departmnetId 
-     * @param {Number} bugetPlanId 
      * @param {module:api/BugetPlanApi~getBugetPlanCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/BugetPlanView}
      */
   }, {
     key: "getBugetPlan",
-    value: function getBugetPlan(companyId, departmnetId, bugetPlanId, callback) {
+    value: function getBugetPlan(companyId, departmnetId, callback) {
       var postBody = null;
       // verify the required parameter 'companyId' is set
       if (companyId === undefined || companyId === null) {
@@ -14677,9 +14738,51 @@ var BugetPlanApi = /*#__PURE__*/function () {
       if (departmnetId === undefined || departmnetId === null) {
         throw new Error("Missing the required parameter 'departmnetId' when calling getBugetPlan");
       }
+      var pathParams = {
+        'companyId': companyId,
+        'departmnetId': departmnetId
+      };
+      var queryParams = {};
+      var headerParams = {};
+      var formParams = {};
+      var authNames = [];
+      var contentTypes = [];
+      var accepts = ['application/json'];
+      var returnType = _BugetPlanView["default"];
+      return this.apiClient.callApi('/api/Company/{companyId}/Department/{departmnetId}/BugetPlan', 'GET', pathParams, queryParams, headerParams, formParams, postBody, authNames, contentTypes, accepts, returnType, null, callback);
+    }
+
+    /**
+     * Callback function to receive the result of the getBugetPlanById operation.
+     * @callback module:api/BugetPlanApi~getBugetPlanByIdCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/BugetPlanView} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * get buget plan
+     * @param {Number} companyId 
+     * @param {Number} departmnetId 
+     * @param {Number} bugetPlanId 
+     * @param {module:api/BugetPlanApi~getBugetPlanByIdCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/BugetPlanView}
+     */
+  }, {
+    key: "getBugetPlanById",
+    value: function getBugetPlanById(companyId, departmnetId, bugetPlanId, callback) {
+      var postBody = null;
+      // verify the required parameter 'companyId' is set
+      if (companyId === undefined || companyId === null) {
+        throw new Error("Missing the required parameter 'companyId' when calling getBugetPlanById");
+      }
+      // verify the required parameter 'departmnetId' is set
+      if (departmnetId === undefined || departmnetId === null) {
+        throw new Error("Missing the required parameter 'departmnetId' when calling getBugetPlanById");
+      }
       // verify the required parameter 'bugetPlanId' is set
       if (bugetPlanId === undefined || bugetPlanId === null) {
-        throw new Error("Missing the required parameter 'bugetPlanId' when calling getBugetPlan");
+        throw new Error("Missing the required parameter 'bugetPlanId' when calling getBugetPlanById");
       }
       var pathParams = {
         'companyId': companyId,
@@ -14745,6 +14848,56 @@ var BugetPlanApi = /*#__PURE__*/function () {
       var formParams = {};
       var authNames = [];
       var contentTypes = [];
+      var accepts = ['application/json'];
+      var returnType = _BugetPlanView["default"];
+      return this.apiClient.callApi('/api/Company/{companyId}/Department/{departmnetId}/BugetPlan/{bugetPlanId}/SetMonthBuget', 'PUT', pathParams, queryParams, headerParams, formParams, postBody, authNames, contentTypes, accepts, returnType, null, callback);
+    }
+
+    /**
+     * Callback function to receive the result of the updateBugetPlan operation.
+     * @callback module:api/BugetPlanApi~updateBugetPlanCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/BugetPlanView} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * 
+     * @param {Number} companyId 
+     * @param {Number} departmnetId 
+     * @param {Number} bugetPlanId 
+     * @param {Object} opts Optional parameters
+     * @param {module:model/BugetPlanView} opts.bugetPlanView 
+     * @param {module:api/BugetPlanApi~updateBugetPlanCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/BugetPlanView}
+     */
+  }, {
+    key: "updateBugetPlan",
+    value: function updateBugetPlan(companyId, departmnetId, bugetPlanId, opts, callback) {
+      opts = opts || {};
+      var postBody = opts['bugetPlanView'];
+      // verify the required parameter 'companyId' is set
+      if (companyId === undefined || companyId === null) {
+        throw new Error("Missing the required parameter 'companyId' when calling updateBugetPlan");
+      }
+      // verify the required parameter 'departmnetId' is set
+      if (departmnetId === undefined || departmnetId === null) {
+        throw new Error("Missing the required parameter 'departmnetId' when calling updateBugetPlan");
+      }
+      // verify the required parameter 'bugetPlanId' is set
+      if (bugetPlanId === undefined || bugetPlanId === null) {
+        throw new Error("Missing the required parameter 'bugetPlanId' when calling updateBugetPlan");
+      }
+      var pathParams = {
+        'companyId': companyId,
+        'departmnetId': departmnetId,
+        'bugetPlanId': bugetPlanId
+      };
+      var queryParams = {};
+      var headerParams = {};
+      var formParams = {};
+      var authNames = [];
+      var contentTypes = ['application/json', 'text/json', 'application/*+json'];
       var accepts = ['application/json'];
       var returnType = _BugetPlanView["default"];
       return this.apiClient.callApi('/api/Company/{companyId}/Department/{departmnetId}/BugetPlan/{bugetPlanId}', 'PUT', pathParams, queryParams, headerParams, formParams, postBody, authNames, contentTypes, accepts, returnType, null, callback);

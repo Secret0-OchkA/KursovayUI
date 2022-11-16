@@ -30,6 +30,7 @@ $(document).ready(function () {
         console.error(error);
       } else {
         console.log(JSON.stringify(data));
+
         let selectors = $(".select-expenseType");
         let table = $("#tableExpenseType > tbody");
         table.empty();
@@ -37,7 +38,7 @@ $(document).ready(function () {
         for (let i = 0; i < data.length; i++) {
           selectors.append(`<option value="${data[i].id}">${data[i].name}</option>`);
           table.append(`<tr>
-          <th>${i}</th>
+          <th>${i + 1}</th>
           <td>${data[i].name}</td>
           <td>${data[i].limit}</td>
           <td>${data[i].description}</td>
@@ -99,13 +100,14 @@ $(document).ready(function () {
                 console.error(error);
               } else {
                 console.log(JSON.stringify(data));
+                $("#variableCountExpense").text(data.length);
                 let table = $("#tableExpense > tbody");
                 table.empty();
                 for (let i = 0; i < data.length; i++) {
                   table.append(`<tr>
                     <td style="display:none;">${data[i].id}</td>
                     <td style="display:none;">${data[i].employeeId}</td>
-                    <th>${i}</th>
+                    <th>${i + 1}</th>
                     <td>${data[i].amount}</td>
                     <td>${data[i].date.getFullYear()}/${data[i].date.getMonth()}/${data[i].date.getDate()}</td>
                     <td>${expenseTypes.find(expType => expType.id == data[i].expenseTypeId).name}</td>
@@ -132,8 +134,6 @@ $(document).ready(function () {
       }
     });
   }
-
-
   //Create
   $("#btn-c-expense").click(function () {
     let employeeId = $("#formCreateExpenseEmployee").val(); // Number | 
@@ -186,6 +186,9 @@ $(document).ready(function () {
         console.error(error);
       } else {
         console.log(JSON.stringify(data));
+
+        $("#variableCountEmployee").text(data.length);
+
         let selectors = $(".select-employee");
         let table = $("#tableEmployee > tbody");
         table.empty();
@@ -193,7 +196,7 @@ $(document).ready(function () {
         for (let i = 0; i < data.length; i++) {
           selectors.append(`<option value="${data[i].id}">${data[i].name}</option>`);
           table.append(`<tr>
-          <th>${i}</th>
+          <th>${i + 1}</th>
           <td>${data[i].name}</td>
         </tr>`);
         }
@@ -252,7 +255,8 @@ $(document).ready(function () {
         for (let i = 0; i < data.length; i++) {
           selectors.append(`<option value="${data[i].id}">${data[i].name}</option>`);
           table.append(`<tr>
-          <th>${i}</th>
+          <td style="display:none;">${data[i].id}</td>
+          <th>${i + 1}</th>
           <td>${data[i].name}</td>
           <td>${data[i].budget}</td>
         </tr>`);
@@ -310,13 +314,70 @@ $(document).ready(function () {
 
   //TODO: BugetPlan=================================
   //Get
-
-  //Create
-
-  //Delete
-
-  //SetMonthBuget
+  $("#selectUpdateBugetPlanDeperatment").change(function () {
+    console.log("click");
+    let departmnetId = $("#selectUpdateBugetPlanDeperatment").val();
 
 
+    bugetPlanApi.getBugetPlan(companyId, departmnetId, (error, data, response) => {
+      if (error) {
+        console.error(error);
+      } else {
+        console.log(JSON.stringify(data));
+        let bugetPlanInst = data;
 
+        $("#monthJanuary").val(bugetPlanInst.january);
+        $("#monthFebruary").val(bugetPlanInst.february);
+        $("#monthMarch").val(bugetPlanInst.march);
+        $("#monthApril").val(bugetPlanInst.april);
+        $("#monthMay").val(bugetPlanInst.may);
+        $("#monthJune").val(bugetPlanInst.june);
+        $("#monthJuly").val(bugetPlanInst.july);
+        $("#monthAugust").val(bugetPlanInst.august);
+        $("#monthSeptember").val(bugetPlanInst.september);
+        $("#monthOctober").val(bugetPlanInst.october);
+        $("#monthNovember").val(bugetPlanInst.november);
+        $("#monthDecember").val(bugetPlanInst.december);
+      }
+    });
+  });
+
+  //UpdateBugetPlan
+  $("#btn-u-bugetPlan").click(function () {
+
+    let departmnetId = $("#selectUpdateBugetPlanDeperatment").val();
+
+    bugetPlanApi.getBugetPlan(companyId, departmnetId, (error, bugetPlan, response) => {
+      if (error) {
+        console.error(error);
+      } else {
+
+        let bugetPlanInst = new MyApiV1.BugetPlanView();
+
+        bugetPlanInst.january = $("#monthJanuary").val();
+        bugetPlanInst.february = $("#monthFebruary").val();
+        bugetPlanInst.march = $("#monthMarch").val();
+        bugetPlanInst.april = $("#monthApril").val();
+        bugetPlanInst.may = $("#monthMay").val();
+        bugetPlanInst.june = $("#monthJune").val();
+        bugetPlanInst.july = $("#monthJuly").val();
+        bugetPlanInst.august = $("#monthAugust").val();
+        bugetPlanInst.september = $("#monthSeptember").val();
+        bugetPlanInst.october = $("#monthOctober").val();
+        bugetPlanInst.november = $("#monthNovember").val();
+        bugetPlanInst.december = $("#monthDecember").val();
+
+        let opts = {
+          'bugetPlanView': bugetPlanInst // BugetPlanView | 
+        };
+        bugetPlanApi.updateBugetPlan(companyId, departmnetId, bugetPlan.id, opts, (error, data, response) => {
+          if (error) {
+            console.error(error);
+          } else {
+            console.log(JSON.stringify(data));
+          }
+        });
+      }
+    });
+  });
 });
