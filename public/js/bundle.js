@@ -2242,6 +2242,9 @@ $(document).ready(function () {
   UpdateEmployee();
   UpdateExpense();
 
+  departmentBudgetChart.update();
+  departmentPeopleChart.update();
+
   //ExpenseType====================================
   //Get
   function UpdateExpenseType() {
@@ -2333,22 +2336,9 @@ $(document).ready(function () {
                     <td>${data[i].date.getFullYear()}/${data[i].date.getMonth()}/${data[i].date.getDate()}</td>
                     <td>${expenseTypes.find(expType => expType.id == data[i].expenseTypeId).name}</td>
                     <td>${employees.find(emp => emp.id == data[i].employeeId).name}</td>
-                    <td><button id='btn${i}-d-expense' class='btn btn-primary d-expense' type='button'>delete</button></td>
                   </tr>`);
 
                   sumExpenseMoney += data[i].amount;
-
-                  $(`#btn${i}-d-expense`).click(function () {
-                    $("this").closest("tr").find("td:first").text("test");
-                    $("this").closest("tr").children("td:nth-child(1)").text();
-                    expEmployeeApi.deleteExpense(expenseId, employeeId, (error, data, response) => {
-                      if (error) {
-                        console.error(error);
-                      } else {
-                        console.log('delete expense');
-                      }
-                    });
-                  });
                 }
                 $("#variableAllExpenseMoney").text(sumExpenseMoney);
               }
@@ -2375,18 +2365,6 @@ $(document).ready(function () {
       } else {
         console.log('Create Expense');
         UpdateExpense();
-      }
-    });
-  });
-  //Delete
-  $("#btn-d-expense").click(function () {
-    let id = $("TODO").val();
-    let employeeId = "employeeId_example"; // String | 
-    expEmployeeApi.deleteExpense(id, employeeId, (error, data, response) => {
-      if (error) {
-        console.error(error);
-      } else {
-        console.log('API called successfully.');
       }
     });
   });
@@ -2610,7 +2588,60 @@ $(document).ready(function () {
       }
     });
   });
+
+
+
+  function UpdateExpenseSelector() {
+    let employeeId = $("#formFindEmployee").val(); // Number |
+    if (employeeId != null) {
+      expEmployeeApi.getExpenses(employeeId, (error, data, response) => {
+        if (error) {
+          console.error(error);
+        } else {
+          $("#findExpenseDelet").empty();
+          for (let i = 0; i < data.length; i++) {
+            $("#findExpenseDelet").append(`<option value="${data[i].id}">${data[i].amount} ${data[i].date}</option>`);
+          }
+        }
+      });
+    }
+  }
+  function UpdateEmployeeSelector() {
+    let departmentId = $("#formFindDeparetment").val();
+    if (departmentId != null) {
+      empDepartmentApi.getEmployeesInDepartment(companyId, departmentId, (error, data, response) => {
+        if (error) {
+          console.error(error);
+        }
+        else {
+          $("#formFindEmployee").empty();
+          $("#findExpenseDelet").empty();
+          for (let i = 0; i < data.length; i++) {
+            $("#formFindEmployee").append(`<option value="${data[i].id}">${data[i].name}</option>`);
+          }
+          UpdateExpenseSelector();
+        }
+      });
+    }
+  }
+  $("#formFindDeparetment").change(UpdateEmployeeSelector);
+  $("#formFindEmployee").change(UpdateExpenseSelector);
+
+  $("#btn-d-expense").click(function () {
+    let deletExpenseId = $("#findExpenseDelet").val();
+    let employeeId = $("#formFindEmployee").val();
+    expEmployeeApi.deleteExpense(deletExpenseId, "null", (error, data, response) => {
+      if (error) {
+        console.error(error);
+      }
+      else {
+        UpdateExpense();
+        UpdateEmployeeSelector();
+      }
+    });
+  });
 });
+
 
 function getRandomColor() {
   let letters = '0123456789ABCDEF';
@@ -2656,10 +2687,8 @@ function DepartmentCharts(departments) {
     }]
   };
 
-  departmentPeopleChart.update();
-  departmentPeopleChart.resize();
   departmentBudgetChart.update();
-  departmentBudgetChart.resize();
+  departmentPeopleChart.update();
 }
 
 
