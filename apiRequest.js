@@ -163,6 +163,7 @@ $(document).ready(function () {
       } else {
         console.log('Create Expense');
         UpdateExpense();
+        UpdateDepartment();
       }
     });
   });
